@@ -309,6 +309,13 @@ class Methods {
     return 0;
   }
 
+  Future export_jm_jpegs(List<int> idList, String path) {
+    return _invoke("export_jm_jpegs", {
+      "comic_id": idList,
+      "dir": path,
+    });
+  }
+
   Future export_jm_zip(List<int> idList, String path) {
     return _invoke("export_jm_zip", {
       "comic_id": idList,

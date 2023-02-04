@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:jenny/basic/methods.dart';
+import 'package:jenny/screens/downloads_exports_screen2.dart';
 
 import '../basic/commons.dart';
 import '../basic/web_dav_sync.dart';
@@ -72,6 +73,14 @@ class _SettingsState extends State<SettingsScreen> {
               }
             },
             title: const Text("清除账号信息"),
+          ),
+          const Divider(),
+          ListTile(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (c) => const DownloadsExportScreen2()));
+            },
+            title: const Text("导出下载到目录(即使没有下载完)"),
           ),
           const Divider(),
         ],

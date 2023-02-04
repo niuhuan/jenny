@@ -109,7 +109,6 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
       },
       icon: const Icon(
         Icons.label_important,
-        color: Colors.white,
       ),
     );
   }
@@ -126,7 +125,6 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
       },
       icon: const Icon(
         Icons.send_to_mobile,
-        color: Colors.white,
       ),
     );
   }
@@ -140,7 +138,6 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
       minWidth: 0,
       child: Text(
         "$downloadThreadCount线程",
-        style: const TextStyle(color: Colors.white),
       ),
     );
   }
