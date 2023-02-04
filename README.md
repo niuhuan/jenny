@@ -1,4 +1,4 @@
-Jasmine Comic
+Jenny Comic
 =============
 
 A comic browser，support Android / iOS / MacOS / Windows / Linux.
