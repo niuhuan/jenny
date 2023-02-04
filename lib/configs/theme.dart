@@ -1,5 +1,6 @@
 import 'package:event/event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../basic/commons.dart';
 import '../basic/methods.dart';
@@ -96,6 +97,8 @@ Future initTheme() async {
   if (theme == "") {
     theme = "0";
   }
+  themeEvent.broadcast();
+  _reloadBarColor();
 }
 
 String themeName() {
@@ -110,6 +113,27 @@ Future chooseTheme(BuildContext context) async {
     await methods.saveProperty(_propertyName, choose);
     theme = choose;
     themeEvent.broadcast();
+    _reloadBarColor();
+  }
+}
+
+_reloadBarColor() {
+  switch (theme){
+    case '0':
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
+      break;
+    case '1':
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          systemNavigationBarIconBrightness: Brightness.dark,
+      ));
+      break;
+    case '2':
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.black87,
+        systemNavigationBarIconBrightness: Brightness.light,
+      ));
+      break;
   }
 }
 

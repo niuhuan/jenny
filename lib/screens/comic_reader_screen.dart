@@ -336,21 +336,21 @@ abstract class _ComicReaderState extends State<_ComicReader> {
         return Stack(
           children: [
             _buildTouchOnceControllerAction(_buildViewer()),
-            _buildBar(Container()),
+            _buildBar(null),
           ],
         );
       case ReaderControllerType.touchDouble:
         return Stack(
           children: [
             _buildTouchDoubleControllerAction(_buildViewer()),
-            _buildBar(Container()),
+            _buildBar(null),
           ],
         );
       case ReaderControllerType.touchDoubleOnceNext:
         return Stack(
           children: [
             _buildTouchDoubleOnceNextControllerAction(_buildViewer()),
-            _buildBar(Container()),
+            _buildBar(null),
           ],
         );
       case ReaderControllerType.threeArea:
@@ -526,13 +526,13 @@ abstract class _ComicReaderState extends State<_ComicReader> {
     );
   }
 
-  Widget _buildBar(Widget child) {
+  Widget _buildBar(Widget? child) {
     switch (currentReaderSliderPosition) {
       case ReaderSliderPosition.bottom:
         return Column(
           children: [
             _buildAppBar(),
-            Expanded(child: child),
+            Expanded(child: child ?? Container()),
             _fullScreen
                 ? Container()
                 : Container(
@@ -583,7 +583,7 @@ abstract class _ComicReaderState extends State<_ComicReader> {
             Expanded(
               child: Stack(
                 children: [
-                  child,
+                  ...child == null ? [] : [child],
                   _buildSliderRight(),
                 ],
               ),
@@ -597,7 +597,7 @@ abstract class _ComicReaderState extends State<_ComicReader> {
             Expanded(
               child: Stack(
                 children: [
-                  child,
+                  ...child == null ? [] : [child],
                   _buildSliderLeft(),
                 ],
               ),
