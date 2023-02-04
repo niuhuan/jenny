@@ -28,7 +28,9 @@ class Avatar extends StatelessWidget {
         child: photoName == "?v=0?v="
             ? Icon(
                 Icons.query_builder_sharp,
-                color: Colors.white,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black54
+                    : Colors.white,
                 size: size,
               )
             : JMPhotoImage(

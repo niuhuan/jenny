@@ -10,6 +10,7 @@ import 'comic_download_screen.dart';
 import 'comic_reader_screen.dart';
 import 'components/comic_comments_list.dart';
 import 'components/continue_read_button.dart';
+import 'components/my_flat_button.dart';
 import 'components/right_click_pop.dart';
 
 class ComicInfoScreen extends StatefulWidget {
@@ -303,29 +304,16 @@ class _ComicSerialsState extends State<_ComicSerials> {
   }
 
   Widget _buildOneButton() {
-    return Container(
-      color: Colors.transparent,
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        children: [
-          Expanded(
-            child: MaterialButton(
-              onPressed: () {
-                _push(
-                  widget.comicSimple,
-                  widget.album.series,
-                  widget.comicSimple.id,
-                  0,
-                );
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: const Text("开始阅读"),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return MyFlatButton(
+      title: "开始阅读",
+      onPressed:  () {
+        _push(
+          widget.comicSimple,
+          widget.album.series,
+          widget.comicSimple.id,
+          0,
+        );
+      },
     );
   }
 

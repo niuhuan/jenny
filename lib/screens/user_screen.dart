@@ -106,7 +106,9 @@ class _UserScreenState extends State<UserScreen>
     }
     return Container(
       height: 200,
-      color: Colors.grey.shade700.withOpacity(.5),
+      color: Theme.of(context).brightness == Brightness.light
+          ? Colors.grey.shade200
+          : Colors.grey.shade800,
       child: Center(
         child: child,
       ),
@@ -164,8 +166,10 @@ class _UserScreenState extends State<UserScreen>
         Center(
           child: Text(
             selfInfo.username,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.black87
+                  : Colors.white,
             ),
           ),
         ),

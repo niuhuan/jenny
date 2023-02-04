@@ -195,39 +195,35 @@ class TopConfirm {
                   Expanded(child: Container()),
                   Container(
                     width: mq,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Container(height: 30),
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 28,
+                    child: Card(
+                      child: Column(
+                        children: [
+                          Container(height: 30),
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontSize: 28,
+                            ),
                           ),
-                        ),
-                        Container(height: 15),
-                        Text(
-                          message,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
+                          Container(height: 15),
+                          Text(
+                            message,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        Container(height: 25),
-                        MaterialButton(
-                          elevation: 0,
-                          color: Colors.black.withOpacity(.1),
-                          onPressed: () {
-                            overlayEntry.remove();
-                          },
-                          child: const Text("朕知道了"),
-                        ),
-                        Container(height: 30),
-                      ],
+                          Container(height: 25),
+                          MaterialButton(
+                            elevation: 0,
+                            color: Colors.grey.shade700.withOpacity(.1),
+                            onPressed: () {
+                              overlayEntry.remove();
+                            },
+                            child: const Text("朕知道了"),
+                          ),
+                          Container(height: 30),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(child: Container()),

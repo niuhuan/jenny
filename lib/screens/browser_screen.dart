@@ -78,12 +78,8 @@ class _BrowserScreenState extends State<BrowserScreen>
             SizedBox(
               height: 56,
               child: Container(
-                padding: const EdgeInsets.only(top: 5),
-                color: Color.alphaBlend(
-                  Colors.grey.shade500.withOpacity(.05),
-                  Theme.of(context).appBarTheme.backgroundColor ??
-                      Colors.transparent,
-                ),
+                padding: const EdgeInsets.only(top: 8),
+                color: Theme.of(context).appBarTheme.backgroundColor,
                 child: Row(
                   children: [
                     Expanded(

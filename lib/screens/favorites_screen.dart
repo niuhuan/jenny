@@ -54,9 +54,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         title: const Text("收藏夹"),
         actions: [
           MaterialButton(
-            textColor: Colors.white,
             onPressed: _chooseFolder,
-            child: Text(_folderMap[_folderId] ?? ""),
+            child: Row(
+              children: [
+                const Icon(Icons.folder_copy_outlined,size: 15),
+                Container(width: 8),
+                Text(_folderMap[_folderId] ?? ""),
+              ],
+            ),
           ),
         ],
       ),
