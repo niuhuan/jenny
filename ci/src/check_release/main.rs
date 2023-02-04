@@ -5,7 +5,7 @@ use std::process::exit;
 const OWNER: &str = "niuhuan";
 const REPO: &str = "jenny";
 const UA: &str = "niuhuan jenny ci";
-const MAIN_BRANCH: &str = "master";
+const MAIN_BRANCH: &str = "main";
 
 #[tokio::main]
 async fn main() -> Result<()> {
