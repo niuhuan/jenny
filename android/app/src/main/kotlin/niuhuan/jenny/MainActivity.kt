@@ -16,6 +16,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import niuhuan.jasmine.Jni
 import java.util.concurrent.Executors
 
 class MainActivity : FlutterActivity() {

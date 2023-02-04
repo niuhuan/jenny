@@ -1,4 +1,4 @@
-package niuhuan.jenny;
+package niuhuan.jasmine;
 
 public class Jni {
 
