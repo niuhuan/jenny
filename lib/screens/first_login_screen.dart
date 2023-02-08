@@ -100,7 +100,7 @@ class _FirstLoginScreenState extends State<FirstLoginScreen> {
       body: ListView(
         children: _logging
             ? [
-                const ContentLoading(),
+                const Center(child: ContentLoading()),
               ]
             : [
                 _usernameField(),
