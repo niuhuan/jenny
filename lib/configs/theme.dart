@@ -107,7 +107,7 @@ String themeName() {
 
 Future chooseTheme(BuildContext context) async {
   String? choose = await chooseMapDialog(context,
-      title: "选择自动清理时间",
+      title: "选择主题",
       values: _nameMap.map((key, value) => MapEntry(value, key)));
   if (choose != null) {
     await methods.saveProperty(_propertyName, choose);
