@@ -309,12 +309,12 @@ abstract class _ComicReaderState extends State<_ComicReader> {
       switch (event) {
         case "UP":
           if (_current > 0) {
-            _needJumpTo(_current - 1, true);
+            _needJumpTo(_current - 1, !currentNoAnimation());
           }
           break;
         case "DOWN":
           if (_current < widget.chapter.images.length - 1) {
-            _needJumpTo(_current + 1, true);
+            _needJumpTo(_current + 1, !currentNoAnimation());
           }
           break;
       }
@@ -1000,11 +1000,7 @@ class _ComicReaderWebToonState extends _ComicReaderState {
 
   @override
   void _needJumpTo(int index, bool animation) {
-    if (currentNoAnimation() || animation == false) {
-      _itemScrollController.jumpTo(
-        index: index,
-      );
-    } else {
+    if (animation) {
       if (DateTime.now().millisecondsSinceEpoch < _controllerTime) {
         return;
       }
@@ -1012,6 +1008,10 @@ class _ComicReaderWebToonState extends _ComicReaderState {
       _itemScrollController.scrollTo(
         index: index, // 减1 当前position 再减少1 前一个
         duration: const Duration(milliseconds: 400),
+      );
+    } else {
+      _itemScrollController.jumpTo(
+        index: index,
       );
     }
   }
