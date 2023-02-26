@@ -103,7 +103,7 @@ class _FirstLoginScreenState extends State<FirstLoginScreen> {
                 _onClickVersion++;
               });
               if (_onClickVersion >= 7) {
-                openUrl(String.fromCharCodes(base64Decode("https://jmcomic1.rocks/signup")));
+                openUrl(String.fromCharCodes(base64Decode("aHR0cHM6Ly9qbWNvbWljMS5yb2Nrcy9zaWdudXA=")));
               }
             },
             icon: Text(currentVersion()),
