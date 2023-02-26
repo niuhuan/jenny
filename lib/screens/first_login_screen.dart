@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:jenny/basic/commons.dart';
-import 'package:jenny/screens/app_screen.dart';
-import 'package:jenny/screens/components/content_loading.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import '../basic/commons.dart';
+import '../configs/versions.dart';
+import 'components/content_loading.dart';
 import '../configs/is_pro.dart';
 import '../configs/login.dart';
 import '../configs/network_api_host.dart';
 import '../configs/network_cdn_host.dart';
+import 'app_screen.dart';
 
 const firstLoginScreen = FirstLoginScreen();
 
@@ -21,6 +23,7 @@ class _FirstLoginScreenState extends State<FirstLoginScreen> {
   bool _logging = false;
   String _username = "";
   String _password = "";
+  int _onClickVersion = 0;
 
   Widget _usernameField() {
     return ListTile(
@@ -94,20 +97,31 @@ class _FirstLoginScreenState extends State<FirstLoginScreen> {
         actions: _logging
             ? []
             : [
-                _saveButton,
-              ],
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _onClickVersion++;
+              });
+              if (_onClickVersion >= 7) {
+                openUrl(String.fromCharCodes(base64Decode("https://jmcomic1.rocks/signup")));
+              }
+            },
+            icon: Text(currentVersion()),
+          ),
+          _saveButton,
+        ],
       ),
       body: ListView(
         children: _logging
             ? [
-                const Center(child: ContentLoading()),
-              ]
+          const Center(child: ContentLoading()),
+        ]
             : [
-                _usernameField(),
-                _passwordField(),
-                apiHostSetting(),
-                cdnHostSetting(),
-              ],
+          _usernameField(),
+          _passwordField(),
+          apiHostSetting(),
+          cdnHostSetting(),
+        ],
       ),
     );
   }
