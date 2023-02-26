@@ -26,7 +26,7 @@ import 'components/right_click_pop.dart';
 class ComicReaderScreen extends StatefulWidget {
   final ComicBasic comic;
   final List<Series> series;
-  final int seriesId;
+  final int chapterId;
   final int initRank;
   final Future<ChapterResponse> Function(int seriesId) loadChapter;
   final bool fullScreenOnInit;
@@ -35,7 +35,7 @@ class ComicReaderScreen extends StatefulWidget {
     Key? key,
     required this.comic,
     required this.series,
-    required this.seriesId,
+    required this.chapterId,
     required this.initRank,
     required this.loadChapter,
     this.fullScreenOnInit = false,
@@ -54,13 +54,13 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
     setState(() {
       _readerType = currentReaderType;
       _readerDirection = currentReaderDirection;
-      _chapterFuture = widget.loadChapter(widget.seriesId);
+      _chapterFuture = widget.loadChapter(widget.chapterId);
     });
   }
 
   @override
   void initState() {
-    methods.updateViewLog(widget.comic.id, widget.seriesId, widget.initRank);
+    methods.updateViewLog(widget.comic.id, widget.chapterId, widget.initRank);
     _load();
     super.initState();
   }
@@ -80,7 +80,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
             body: ContentError(
               onRefresh: () async {
                 setState(() {
-                  _chapterFuture = methods.chapter(widget.seriesId);
+                  _chapterFuture = methods.chapter(widget.chapterId);
                 });
               },
               error: snapshot.error,
@@ -98,7 +98,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
         final screen = Scaffold(
           backgroundColor: Colors.black,
           body: _ComicReader(
-            seriesId: widget.seriesId,
+            comicId: widget.comic.id,
             chapter: chapter,
             startIndex: widget.initRank,
             reload: (int index, bool fullScreen) async {
@@ -107,7 +107,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
                   return ComicReaderScreen(
                     comic: widget.comic,
                     series: widget.series,
-                    seriesId: widget.seriesId,
+                    chapterId: widget.chapterId,
                     initRank: index,
                     loadChapter: widget.loadChapter,
                     fullScreenOnInit: fullScreen,
@@ -121,7 +121,7 @@ class _ComicReaderScreenState extends State<ComicReaderScreen> {
                   return ComicReaderScreen(
                     comic: widget.comic,
                     series: widget.series,
-                    seriesId: id,
+                    chapterId: id,
                     initRank: 0,
                     loadChapter: widget.loadChapter,
                     fullScreenOnInit: fullScreen,
@@ -205,7 +205,7 @@ class _ReaderControllerEventArgs extends EventArgs {
 }
 
 class _ComicReader extends StatefulWidget {
-  final int seriesId;
+  final int comicId;
   final ChapterResponse chapter;
   final FutureOr Function(int, bool) reload;
   final FutureOr Function(int, bool) onChangeEp;
@@ -215,7 +215,7 @@ class _ComicReader extends StatefulWidget {
   final bool fullScreenOnInit;
 
   const _ComicReader({
-    required this.seriesId,
+    required this.comicId,
     required this.chapter,
     required this.reload,
     required this.onChangeEp,
@@ -263,7 +263,7 @@ abstract class _ComicReaderState extends State<_ComicReader> {
         _current = index;
         _slider = index;
         var _ = methods.updateViewLog(
-          widget.seriesId,
+          widget.comicId,
           widget.chapter.id,
           index,
         ); // 在后台线程入库

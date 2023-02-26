@@ -207,7 +207,7 @@ class _DownloadAlbumScreenState extends State<DownloadAlbumScreen> {
           series: create.chapters
               .map((e) => Series(id: e.id, name: e.name, sort: e.sort))
               .toList(),
-          seriesId: seriesId,
+          chapterId: seriesId,
           initRank: initRank,
           loadChapter: (int seriesId) {
             return _loadChapter(create, seriesId);

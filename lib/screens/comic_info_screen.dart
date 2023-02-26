@@ -362,7 +362,7 @@ class _ComicSerialsState extends State<_ComicSerials> {
         builder: (context) => ComicReaderScreen(
           comic: comic,
           series: series,
-          seriesId: seriesId,
+          chapterId: seriesId,
           initRank: initRank,
           loadChapter: methods.chapter,
         ),

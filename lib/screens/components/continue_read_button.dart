@@ -56,6 +56,20 @@ class _ContinueReadButtonState extends State<ContinueReadButton> {
               );
             };
             text = '继续阅读'; // todo names and pages
+            if (widget.album.series.isNotEmpty) {
+              for (var i = 0; i < widget.album.series.length; i++) {
+                if (widget.album.series[i].id == viewLog.lastViewChapterId) {
+                  text += " (${i + 1}.";
+                  if (widget.album.series[i].name.isNotEmpty) {
+                    text += widget.album.series[i].name + ".";
+                  }
+                  text += "P${viewLog.lastViewPage + 1})";
+                  break;
+                }
+              }
+            } else {
+              text += " (P${viewLog.lastViewPage + 1})";
+            }
           }
         }
         return MyFlatButton(title: text, onPressed: onPressed);
