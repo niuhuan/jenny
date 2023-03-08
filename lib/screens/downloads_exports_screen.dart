@@ -110,76 +110,52 @@ class _DownloadsExportScreenState extends State<DownloadsExportScreen> {
   List<int> selected = [];
 
   Widget _selectAllButton(List<int> exportableIds) {
-    return MaterialButton(
-        minWidth: 0,
-        onPressed: () async {
-          setState(() {
-            if (selected.length >= exportableIds.length) {
-              selected.clear();
-            } else {
-              selected.clear();
-              selected.addAll(exportableIds);
-            }
-          });
-        },
-        child: Column(
-          children: [
-            Expanded(child: Container()),
-            const Icon(
-              Icons.select_all,
-              size: 18,
-              color: Colors.white,
-            ),
-            const Text(
-              '全选',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            ),
-            Expanded(child: Container()),
-          ],
-        ));
+    return IconButton(
+      onPressed: () async {
+        setState(() {
+          if (selected.length >= exportableIds.length) {
+            selected.clear();
+          } else {
+            selected.clear();
+            selected.addAll(exportableIds);
+          }
+        });
+      },
+      icon: const Icon(
+        Icons.select_all,
+      ),
+    );
   }
 
   Widget _goToExport() {
-    return MaterialButton(
-        minWidth: 0,
-        onPressed: () async {
-          if (selected.isEmpty) {
-            defaultToast(context, "请选择导出的内容");
-            return;
-          }
-          if (Platform.isAndroid) {
-            if (androidVersion >= 30) {
-              if (!(await Permission.manageExternalStorage.request()).isGranted) {
-                throw Exception("申请权限被拒绝");
-              }
-            } else {
-              if (!(await Permission.storage.request()).isGranted) {
-                throw Exception("申请权限被拒绝");
-              }
+    return IconButton(
+      onPressed: () async {
+        if (selected.isEmpty) {
+          defaultToast(context, "请选择导出的内容");
+          return;
+        }
+        if (Platform.isAndroid) {
+          if (androidVersion >= 30) {
+            if (!(await Permission.manageExternalStorage.request()).isGranted) {
+              throw Exception("申请权限被拒绝");
+            }
+          } else {
+            if (!(await Permission.storage.request()).isGranted) {
+              throw Exception("申请权限被拒绝");
             }
           }
-          final exported = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => DownloadsExportingScreen(
-                idList: selected,
-              ),
+        }
+        final exported = await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DownloadsExportingScreen(
+              idList: selected,
             ),
-          );
-        },
-        child: Column(
-          children: [
-            Expanded(child: Container()),
-            const Icon(
-              Icons.check,
-              size: 18,
-              color: Colors.white,
-            ),
-            const Text(
-              '确认',
-              style: TextStyle(fontSize: 14, color: Colors.white),
-            ),
-            Expanded(child: Container()),
-          ],
-        ));
+          ),
+        );
+      },
+      icon: const Icon(
+        Icons.check,
+      ),
+    );
   }
 }

@@ -108,7 +108,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
         });
       },
       icon: const Icon(
-        Icons.label_important,
+        Icons.drive_folder_upload,
       ),
     );
   }
@@ -124,7 +124,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
         );
       },
       icon: const Icon(
-        Icons.send_to_mobile,
+        Icons.sim_card_download_outlined,
       ),
     );
   }
