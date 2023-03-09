@@ -1,3 +1,4 @@
-v0.0.4
+v0.0.5
 
-- [x] 🐛 fix gallery volume button pager
+- [x] 🐛 fix button color
+- [x] 🚀 modify libssl
