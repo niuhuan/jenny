@@ -5,7 +5,8 @@ on:
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
-
+  RUST_TOOLCHAIN: nightly-2023-03-13
+  NDK_VERSION: 25.2.9519653
 jobs:
 
   ci-pass:
@@ -35,7 +36,8 @@ jobs:
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          override: true
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -106,7 +108,8 @@ jobs:
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          override: true
 
       - id: check_asset
         name: Check asset
@@ -161,7 +164,7 @@ jobs:
             platform-tools
             platforms;android-32
             build-tools;33.0.0
-            ndk;22.1.7171670
+            ndk;${{ env.NDK_VERSION }}
 
       - name: Install libfuse2 (Linux)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'linux'
@@ -205,7 +208,7 @@ jobs:
       - name: Install rust target and build (Android-arm64)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm64')
         run: |
-          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/22.1.7171670
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
           rustup target install aarch64-linux-android
           cd native/jmbackend/platforms/android
           cargo ndk -o ../../../../android/app/src/main/jniLibs -t arm64-v8a build --release
@@ -215,7 +218,7 @@ jobs:
       - name: Install rust target and build (Android-arm32)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-arm32')
         run: |
-          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/22.1.7171670
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
           rustup target install armv7-linux-androideabi
           cd native/jmbackend/platforms/android
           cargo ndk -o ../../../../android/app/src/main/jniLibs -t armeabi-v7a build --release
@@ -225,7 +228,7 @@ jobs:
       - name: Install rust target and build (Android-x86_64)
         if: steps.check_asset.outputs.skip_build != 'true' && ( matrix.config.target == 'android-x86_64')
         run: |
-          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/22.1.7171670
+          export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/${{ env.NDK_VERSION }}
           rustup target install x86_64-linux-android
           cd native/jmbackend/platforms/android
           cargo ndk -o ../../../../android/app/src/main/jniLibs -t x86_64 build --release
@@ -325,7 +328,8 @@ jobs:
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
+          toolchain: ${{ env.RUST_TOOLCHAIN }}
+          override: true
 
       - name: Checkout
         uses: actions/checkout@v3
