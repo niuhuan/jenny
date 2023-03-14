@@ -33,6 +33,25 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     }
   }
 
+  final _sortNameMap = {
+    "mr": "收藏时间",
+    "mp": "更新时间",
+  };
+  String _sort = "mr";
+
+  _chooseSort() async {
+    String? f = await chooseMapDialog(
+      context,
+      values: _sortNameMap.map((key, value) => MapEntry(value, key)),
+      title: "选择排序",
+    );
+    if (f != null) {
+      setState(() {
+        _sort = f;
+      });
+    }
+  }
+
   @override
   void initState() {
     for (var value in selfInfo.favoriteList) {
@@ -54,6 +73,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         title: const Text("收藏夹"),
         actions: [
           MaterialButton(
+            onPressed: _chooseSort,
+            child: Row(
+              children: [
+                const Icon(Icons.sort, size: 15),
+                Container(width: 8),
+                Text(_sortNameMap[_sort] ?? ""),
+              ],
+            ),
+          ),
+          MaterialButton(
             onPressed: _chooseFolder,
             child: Row(
               children: [
@@ -66,9 +95,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         ],
       ),
       body: ComicPager(
-        key: Key("FAVOUR:$_folderId"),
+        key: Key("FAVOUR:$_folderId:$_sort"),
         onPage: (int page) async {
-          final response = await methods.favorites(_folderId, page);
+          final response = await methods.favorites(_folderId, page, _sort);
           return InnerComicPage(total: response.total, list: response.list);
         },
       ),
