@@ -3,6 +3,7 @@ import 'package:jenny/basic/commons.dart';
 import 'package:jenny/basic/methods.dart';
 import 'package:jenny/configs/download_thread_count.dart';
 import 'package:jenny/screens/components/content_builder.dart';
+import 'package:jenny/screens/components/content_loading.dart';
 import 'package:jenny/screens/download_import_screen.dart';
 
 import 'components/comic_download_card.dart';
@@ -18,11 +19,25 @@ class DownloadsScreen extends StatefulWidget {
 }
 
 class _DownloadsScreenState extends State<DownloadsScreen> {
-  late Future<List<DownloadAlbum>> _downloadsFuture;
+  bool _loading = true;
+  List<DownloadAlbum> _downloads = [];
+
+  _load() async {
+    setState(() {
+      _loading = true;
+    });
+    try {
+      _downloads = await methods.allDownloads();
+    } catch (_e) {
+      // 极端情况才发生, 忽略
+    } finally {
+      _loading = false;
+    }
+  }
 
   @override
   void initState() {
-    _downloadsFuture = methods.allDownloads();
+    _load();
     super.initState();
   }
 
@@ -42,55 +57,51 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
           IconButton(
             onPressed: () async {
               await methods.renewAllDownloads();
-              setState(() {
-                _downloadsFuture = methods.allDownloads();
-              });
+              if (!_loading) {
+                _load();
+              }
             },
             icon: const Icon(Icons.autorenew),
           ),
         ],
       ),
-      body: ContentBuilder(
-        key: null,
-        future: _downloadsFuture,
-        onRefresh: () async {
-          setState(() {
-            _downloadsFuture = methods.allDownloads();
-          });
-        },
-        successBuilder: (
-          BuildContext context,
-          AsyncSnapshot<List<DownloadAlbum>> snapshot,
-        ) {
-          return ListView(
-            children: snapshot.requireData
-                .map((e) => GestureDetector(
-                      onTap: () {
-                        if (e.dlStatus == 3) {
-                          return;
-                        }
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return DownloadAlbumScreen(e);
-                          }),
-                        );
-                      },
-                      onLongPress: () async {
-                        String? action = await chooseListDialog(context,
-                            values: ["删除"], title: "请选择");
-                        if (action != null && action == "删除") {
-                          await methods.deleteDownload(e.id);
-                          setState(() {
-                            _downloadsFuture = methods.allDownloads();
-                          });
-                        }
-                      },
-                      child: ComicDownloadCard(e),
-                    ))
-                .toList(),
+      body: _body(),
+    );
+  }
+
+  Widget _body(){
+    if (_loading && _downloads.isEmpty) {
+      return const ContentLoading(label: "加载中");
+    }
+    // if (_loading) 可以加个浮层, 极为短暂, 性价比比较低
+    return _listView();
+  }
+
+  Widget _listView(){
+     return ListView(
+      children: _downloads.map((e) => GestureDetector(
+        key: Key("DOWNLOAD:${e.id}"),
+        onTap: () {
+          if (e.dlStatus == 3) {
+            return;
+          }
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (BuildContext context) {
+              return DownloadAlbumScreen(e);
+            }),
           );
         },
-      ),
+        onLongPress: () async {
+          String? action = await chooseListDialog(context,
+              values: ["删除"], title: "请选择");
+          if (action != null && action == "删除") {
+            await methods.deleteDownload(e.id);
+            _load();
+          }
+        },
+        child: ComicDownloadCard(e),
+      ))
+          .toList(),
     );
   }
 
@@ -103,9 +114,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
             builder: (context) => const DownloadImportScreen(),
           ),
         );
-        setState(() {
-          _downloadsFuture = methods.allDownloads();
-        });
+        _load();
       },
       icon: const Icon(
         Icons.drive_folder_upload,
