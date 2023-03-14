@@ -31,7 +31,9 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
     } catch (_e) {
       // 极端情况才发生, 忽略
     } finally {
-      _loading = false;
+      setState(() {
+        _loading = false;
+      });
     }
   }
 
