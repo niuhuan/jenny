@@ -166,12 +166,6 @@ jobs:
             build-tools;33.0.0
             ndk;${{ env.NDK_VERSION }}
 
-      - name: Install libfuse2 (Linux)
-        if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'linux'
-        run: |
-          sudo apt update
-          sudo apt install -y libfuse2
-
       - name: Set-Version (All)
         if: steps.check_asset.outputs.skip_build != 'true'
         run: |
@@ -239,24 +233,39 @@ jobs:
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'linux'
         run: |
           sudo apt-get update
-          sudo apt install -y ninja-build liblzma-dev libgtk-3-dev libgl1-mesa-dev xorg-dev
+          
+          # install appimagetool
+          
+          sudo apt install -y libfuse2
+          # if OrcaleLinux # sudo yum install fuse-lib fuse file # libfuse.so.2 fusermount file
+          
           curl -JOL https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
           chmod a+x appimagetool-x86_64.AppImage
           mv appimagetool-x86_64.AppImage appimagetool
+          
+          # building deps 
+                   
+          sudo apt install -y ninja-build liblzma-dev libgtk-3-dev libgl1-mesa-dev xorg-dev
+          # if OrcaleLinux # sudo yum install xz-devel libX11-devel gtk3-devel
+          
+          # build rust lib
 
           cargo build --manifest-path native/jmbackend/platforms/linux/Cargo.toml --features= --lib --release --target=x86_64-unknown-linux-gnu
           cp native/jmbackend/platforms/linux/target/x86_64-unknown-linux-gnu/release/librust.a linux/
           cbindgen native/jmbackend/src/lib.rs -l c++ > linux/rust.h
-          
           cbindgen native/jmbackend/platforms/linux/src/lib.rs -l c++ > linux/rust1.h
+          
+          # build flutter
 
           flutter config --enable-linux-desktop
           flutter build linux --release
+          
+          # gen AppImage
+          
           mv build/linux/x64/release/bundle/{jenny,AppRun}
           cp linux/appimage/* build/linux/x64/release/bundle/
           ./appimagetool build/linux/x64/release/bundle/
           mv *.AppImage build/linux.AppImage
-
 
       - name: build (windows)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.target == 'windows'
@@ -337,3 +346,4 @@ jobs:
       - run: |
           cd ci
           cargo run --bin community-notify
+
