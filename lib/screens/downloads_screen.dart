@@ -133,6 +133,7 @@ class _DownloadsScreenState extends State<DownloadsScreen> {
             builder: (context) => const DownloadsExportScreen(),
           ),
         );
+        _load();
       },
       icon: const Icon(
         Icons.sim_card_download_outlined,

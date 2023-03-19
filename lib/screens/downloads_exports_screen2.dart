@@ -147,7 +147,8 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
           }
           if (Platform.isAndroid) {
             if (androidVersion >= 30) {
-              if (!(await Permission.manageExternalStorage.request()).isGranted) {
+              if (!(await Permission.manageExternalStorage.request())
+                  .isGranted) {
                 throw Exception("申请权限被拒绝");
               }
             } else {
@@ -163,6 +164,24 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
               ),
             ),
           );
+          _downloadsFuture = methods.allDownloads().then((value) {
+            List<DownloadAlbum> a = [];
+            for (var value1 in value) {
+              a.add(value1);
+            }
+            return a;
+          });
+          var pre = selected;
+          setState(() {
+            selected = [];
+          });
+          final result = await _downloadsFuture;
+          for (var value2 in result.map((e) => e.id)) {
+            if (pre.contains(value2)) {
+              selected.add(value2);
+            }
+          }
+          setState(() {});
         },
         child: Column(
           children: [

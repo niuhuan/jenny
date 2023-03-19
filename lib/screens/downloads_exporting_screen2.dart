@@ -32,6 +32,7 @@ class _DownloadsExportingScreen2State extends State<DownloadsExportingScreen2> {
   bool exportFail = false;
   dynamic e;
   String exportMessage = "正在导出";
+  bool deleteExport = false;
 
   @override
   void initState() {
@@ -68,6 +69,15 @@ class _DownloadsExportingScreen2State extends State<DownloadsExportingScreen2> {
         //   onPressed: _exportPkz,
         //   child: const Text("导出PKZ"),
         // ),
+        Container(height: 20),
+        SwitchListTile(
+          value: deleteExport,
+          onChanged: (value) {
+            setState(() {
+              deleteExport = value;
+            });
+          },
+        ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportJpegs,
@@ -107,6 +117,7 @@ class _DownloadsExportingScreen2State extends State<DownloadsExportingScreen2> {
         await methods.export_jm_jpegs(
           widget.idList,
           path,
+          deleteExport,
         );
         exported = true;
       } catch (err) {
@@ -119,7 +130,6 @@ class _DownloadsExportingScreen2State extends State<DownloadsExportingScreen2> {
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +144,7 @@ class _DownloadsExportingScreen2State extends State<DownloadsExportingScreen2> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("批量导出"),
+          title: const Text("批量导出(即使没有下载完)"),
         ),
         body: _body(),
       ),

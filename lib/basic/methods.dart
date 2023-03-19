@@ -310,40 +310,45 @@ class Methods {
     return 0;
   }
 
-  Future export_jm_jpegs(List<int> idList, String path) {
+  Future export_jm_jpegs(List<int> idList, String path, bool deleteExported) {
     return _invoke("export_jm_jpegs", {
       "comic_id": idList,
       "dir": path,
+      "delete_exported": deleteExported,
     });
   }
 
-  Future export_jm_zip(List<int> idList, String path) {
+  Future export_jm_zip(List<int> idList, String path, bool deleteExported) {
     return _invoke("export_jm_zip", {
       "comic_id": idList,
       "dir": path,
+      "delete_exported": deleteExported,
     });
   }
 
-  Future export_jm_zip_single(int id, String folder, String? rename) {
+  Future export_jm_zip_single(int id, String folder, String? rename, bool deleteExported) {
     return _invoke("export_jm_zip_single", {
       "id": id,
       "folder": folder,
       "rename": rename,
+      "delete_exported": deleteExported,
     });
   }
 
-  Future export_jm_jmi(List<int> idList, String path) {
+  Future export_jm_jmi(List<int> idList, String path, bool deleteExported) {
     return _invoke("export_jm_jmi", {
       "comic_id": idList,
       "dir": path,
+      "delete_exported": deleteExported,
     });
   }
 
-  Future export_jm_jmi_single(int id, String folder, String? rename) {
+  Future export_jm_jmi_single(int id, String folder, String? rename, bool deleteExported) {
     return _invoke("export_jm_jmi_single", {
       "id": id,
       "folder": folder,
       "rename": rename,
+      "delete_exported": deleteExported,
     });
   }
 

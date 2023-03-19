@@ -152,6 +152,24 @@ class _DownloadsExportScreenState extends State<DownloadsExportScreen> {
             ),
           ),
         );
+        _downloadsFuture = methods.allDownloads().then((value) {
+          List<DownloadAlbum> a = [];
+          for (var value1 in value) {
+            a.add(value1);
+          }
+          return a;
+        });
+        var pre = selected;
+        setState(() {
+          selected = [];
+        });
+        final result = await _downloadsFuture;
+        for (var value2 in result.map((e) => e.id)) {
+          if (pre.contains(value2)) {
+            selected.add(value2);
+          }
+        }
+        setState(() {});
       },
       icon: const Icon(
         Icons.check,

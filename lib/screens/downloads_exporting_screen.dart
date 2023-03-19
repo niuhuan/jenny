@@ -32,6 +32,7 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
   bool exportFail = false;
   dynamic e;
   String exportMessage = "正在导出";
+  var deleteExport = false;
 
   @override
   void initState() {
@@ -68,6 +69,15 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
         //   onPressed: _exportPkz,
         //   child: const Text("导出PKZ"),
         // ),
+        Container(height: 20),
+        SwitchListTile(
+          value: deleteExport,
+          onChanged: (value) {
+            setState(() {
+              deleteExport = value;
+            });
+          },
+        ),
         Container(height: 20),
         MaterialButton(
           onPressed: _exportPkis,
@@ -128,6 +138,7 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
             value,
             path,
             rename,
+            deleteExport,
           );
         }
         exported = true;
@@ -175,6 +186,7 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
             value,
             path,
             rename,
+            deleteExport,
           );
         }
         exported = true;
