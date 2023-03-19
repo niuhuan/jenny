@@ -71,6 +71,7 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
         // ),
         Container(height: 20),
         SwitchListTile(
+          title: const Text("导出后删除下载的漫画"),
           value: deleteExport,
           onChanged: (value) {
             setState(() {

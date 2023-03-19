@@ -1,4 +1,4 @@
-v0.0.6
+v0.0.7
 
-- [x] ✨ Favourite sorts
-- [x] ♻️ Delete download not refresh page
+- [x] ✨️ Delete download at exported
+- [x] ♻️ Don't shark

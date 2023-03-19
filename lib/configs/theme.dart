@@ -118,23 +118,30 @@ Future chooseTheme(BuildContext context) async {
 }
 
 _reloadBarColor() {
-  switch (theme){
-    case '0':
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
-      break;
-    case '1':
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-          systemNavigationBarColor: Colors.white,
-          systemNavigationBarIconBrightness: Brightness.dark,
-      ));
-      break;
-    case '2':
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.black87,
-        systemNavigationBarIconBrightness: Brightness.light,
-      ));
-      break;
-  }
+  // switch (theme) {
+  //   case '0':
+  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //       systemStatusBarContrastEnforced: true,
+  //       systemNavigationBarContrastEnforced: true,
+  //     ));
+  //     break;
+  //   case '1':
+  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //       systemNavigationBarColor: Colors.white,
+  //       systemNavigationBarIconBrightness: Brightness.dark,
+  //       systemStatusBarContrastEnforced: true,
+  //       systemNavigationBarContrastEnforced: true,
+  //     ));
+  //     break;
+  //   case '2':
+  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  //       systemNavigationBarColor: Colors.black87,
+  //       systemNavigationBarIconBrightness: Brightness.light,
+  //       systemStatusBarContrastEnforced: true,
+  //       systemNavigationBarContrastEnforced: true,
+  //     ));
+  //     break;
+  // }
 }
 
 final themeEvent = Event();

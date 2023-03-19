@@ -25,7 +25,9 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
     _downloadsFuture = methods.allDownloads().then((value) {
       List<DownloadAlbum> a = [];
       for (var value1 in value) {
-        a.add(value1);
+        if (value1.dlStatus != 3) {
+          a.add(value1);
+        }
       }
       return a;
     });
@@ -64,7 +66,15 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
         future: _downloadsFuture,
         onRefresh: () async {
           setState(() {
-            _downloadsFuture = methods.allDownloads();
+            _downloadsFuture = methods.allDownloads().then((value) {
+              List<DownloadAlbum> a = [];
+              for (var value1 in value) {
+                if (value1.dlStatus != 3) {
+                  a.add(value1);
+                }
+              }
+              return a;
+            });
           });
         },
         successBuilder: (
@@ -167,7 +177,9 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
           _downloadsFuture = methods.allDownloads().then((value) {
             List<DownloadAlbum> a = [];
             for (var value1 in value) {
-              a.add(value1);
+              if (value1.dlStatus != 3) {
+                a.add(value1);
+              }
             }
             return a;
           });
