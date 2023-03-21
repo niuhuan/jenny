@@ -2,3 +2,4 @@ v0.0.7
 
 - [x] ✨️ Delete download at exported
 - [x] ♻️ Don't shark
+- [x] ✨ PING api speed

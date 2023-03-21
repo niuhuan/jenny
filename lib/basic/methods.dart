@@ -418,6 +418,11 @@ class Methods {
   Future setDownloadAndExportTo(String path) async {
     return await _invoke("set_download_and_export_to", path);
   }
+
+  Future<int> ping(String idx) async {
+    print("PING $idx");
+    return int.parse(await _invoke("ping_server", idx));
+  }
 }
 
 class _Response {

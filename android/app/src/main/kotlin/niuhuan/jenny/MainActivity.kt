@@ -26,9 +26,6 @@ class MainActivity : FlutterActivity() {
         Executors.newCachedThreadPool { runnable -> Thread(runnable).also { it.isDaemon = true } }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = 0;
-        }
         // 初始化
         Jni.init(context.filesDir.absolutePath)
         // channel
