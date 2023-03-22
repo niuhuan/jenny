@@ -28,16 +28,18 @@ Future<T?> chooseApiDialog<T>(BuildContext buildContext) async {
       return SimpleDialog(
         title: const Text("API分流"),
         children: apiHosts.entries
-            .map((e) => SimpleDialogOption(
-                  child: ApiOptionRow(
-                    e.key,
-                    e.value,
-                    key: Key("API:${e.value}"),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(e.value);
-                  },
-                ))
+            .map(
+              (e) => SimpleDialogOption(
+                child: ApiOptionRow(
+                  e.key,
+                  e.value,
+                  key: Key("API:${e.value}"),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop(e.value);
+                },
+              ),
+            )
             .toList(),
       );
     },

@@ -93,6 +93,10 @@ Map<String, String> _nameMap = {
 };
 
 Future initTheme() async {
+  SystemChrome.setEnabledSystemUIMode(
+    SystemUiMode.edgeToEdge,
+    overlays: SystemUiOverlay.values,
+  );
   theme = await methods.loadProperty(_propertyName);
   if (theme == "") {
     theme = "0";
@@ -117,31 +121,60 @@ Future chooseTheme(BuildContext context) async {
   }
 }
 
-_reloadBarColor() {
-  // switch (theme) {
-  //   case '0':
-  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //       systemStatusBarContrastEnforced: true,
-  //       systemNavigationBarContrastEnforced: true,
-  //     ));
-  //     break;
-  //   case '1':
-  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //       systemNavigationBarColor: Colors.white,
-  //       systemNavigationBarIconBrightness: Brightness.dark,
-  //       systemStatusBarContrastEnforced: true,
-  //       systemNavigationBarContrastEnforced: true,
-  //     ));
-  //     break;
-  //   case '2':
-  //     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-  //       systemNavigationBarColor: Colors.black87,
-  //       systemNavigationBarIconBrightness: Brightness.light,
-  //       systemStatusBarContrastEnforced: true,
-  //       systemNavigationBarContrastEnforced: true,
-  //     ));
-  //     break;
-  // }
+reloadBarColor({bool op = false}) {
+  _reloadBarColor(op: op);
+}
+
+_reloadBarColor({bool op = false}) {
+  if (op) {
+    switch (theme) {
+      case '0':
+        SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemStatusBarContrastEnforced: true,
+          systemNavigationBarContrastEnforced: true,
+        ));
+        break;
+      case '1':
+        SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemNavigationBarIconBrightness: Brightness.dark,
+          systemStatusBarContrastEnforced: true,
+          systemNavigationBarContrastEnforced: true,
+        ));
+        break;
+      case '2':
+        SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemNavigationBarIconBrightness: Brightness.light,
+          systemStatusBarContrastEnforced: true,
+          systemNavigationBarContrastEnforced: true,
+        ));
+        break;
+    }
+  } else {
+    switch (theme) {
+      case '0':
+        SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemStatusBarContrastEnforced: true,
+          systemNavigationBarContrastEnforced: true,
+        ));
+        break;
+      case '1':
+        SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.white,
+          systemNavigationBarIconBrightness: Brightness.dark,
+          systemStatusBarContrastEnforced: true,
+          systemNavigationBarContrastEnforced: true,
+        ));
+        break;
+      case '2':
+        SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          systemNavigationBarColor: Colors.black87,
+          systemNavigationBarIconBrightness: Brightness.light,
+          systemStatusBarContrastEnforced: true,
+          systemNavigationBarContrastEnforced: true,
+        ));
+        break;
+    }
+  }
 }
 
 final themeEvent = Event();

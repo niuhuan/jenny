@@ -1,3 +1,7 @@
+v0.0.8
+
+- [x] ♻️ Fix app nav bar color
+
 v0.0.7
 
 - [x] ✨️ Delete download at exported

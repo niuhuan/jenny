@@ -19,6 +19,7 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../configs/no_animation.dart';
+import '../configs/theme.dart';
 import '../configs/volume_key_control.dart';
 import 'components/images.dart';
 import 'components/right_click_pop.dart';
@@ -251,9 +252,19 @@ abstract class _ComicReaderState extends State<_ComicReader> {
 
   Future _onFullScreenChange(bool fullScreen) async {
     setState(() {
-      SystemChrome.setEnabledSystemUIOverlays(
-        fullScreen ? [] : SystemUiOverlay.values,
-      );
+      if (Platform.isAndroid || Platform.isIOS) {
+        if (fullScreen) {
+          SystemChrome.setEnabledSystemUIMode(
+            SystemUiMode.manual,
+            overlays: [],
+          );
+        } else {
+          SystemChrome.setEnabledSystemUIMode(
+            SystemUiMode.edgeToEdge,
+            overlays: SystemUiOverlay.values,
+          );
+        }
+      }
       _fullScreen = fullScreen;
     });
   }
@@ -278,8 +289,8 @@ abstract class _ComicReaderState extends State<_ComicReader> {
     if (_fullScreen) {
       if (Platform.isAndroid || Platform.isIOS) {
         SystemChrome.setEnabledSystemUIMode(
-          SystemUiMode.manual,
-          overlays: [],
+          SystemUiMode.edgeToEdge,
+          overlays: SystemUiOverlay.values,
         );
       }
     }
@@ -300,8 +311,8 @@ abstract class _ComicReaderState extends State<_ComicReader> {
     }
     if (Platform.isAndroid || Platform.isIOS) {
       SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.manual,
-        overlays: SystemUiOverlay.values,
+        SystemUiMode.edgeToEdge,
+        overlays: [SystemUiOverlay.top],
       );
     }
     super.dispose();
@@ -374,34 +385,37 @@ abstract class _ComicReaderState extends State<_ComicReader> {
     }
     if (ReaderSliderPosition.right == currentReaderSliderPosition) {
       return SafeArea(
-          child: Align(
-        alignment: Alignment.bottomRight,
-        child: Material(
-          color: Colors.transparent,
-          child: Container(
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              padding:
+                  const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+              margin: const EdgeInsets.only(bottom: 10),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+                color: Color(0x88000000),
               ),
-              color: Color(0x88000000),
-            ),
-            child: GestureDetector(
-              onTap: () {
-                _onFullScreenChange(!_fullScreen);
-              },
-              child: Icon(
-                _fullScreen ? Icons.fullscreen_exit : Icons.fullscreen_outlined,
-                size: 30,
-                color: Colors.white,
+              child: GestureDetector(
+                onTap: () {
+                  _onFullScreenChange(!_fullScreen);
+                },
+                child: Icon(
+                  _fullScreen
+                      ? Icons.fullscreen_exit
+                      : Icons.fullscreen_outlined,
+                  size: 30,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
         ),
-      ));
+      );
     }
     return SafeArea(
         child: Align(
