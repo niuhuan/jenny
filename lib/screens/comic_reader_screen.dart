@@ -312,7 +312,7 @@ abstract class _ComicReaderState extends State<_ComicReader> {
     if (Platform.isAndroid || Platform.isIOS) {
       SystemChrome.setEnabledSystemUIMode(
         SystemUiMode.edgeToEdge,
-        overlays: [SystemUiOverlay.top],
+        overlays: SystemUiOverlay.values,
       );
     }
     super.dispose();

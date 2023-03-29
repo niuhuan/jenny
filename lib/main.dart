@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jenny/screens/components/mouse_and_touch_scroll_behavior.dart';
 import 'package:jenny/screens/init_screen.dart';
-
+import 'basic/desktop.dart';
 import 'basic/navigator.dart';
 import 'configs/theme.dart';
 
@@ -20,12 +20,14 @@ class _JennyState extends State<Jenny> {
 
   @override
   void initState() {
+    onDesktopStart();
     themeEvent.subscribe(_setState);
     super.initState();
   }
 
   @override
   void dispose() {
+    onDesktopStop();
     themeEvent.unsubscribe(_setState);
     super.dispose();
   }

@@ -17,7 +17,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
     wcscat_s(awBuffer, 2048, L"data/application");
     char buffer[4096];
     size_t i;
-    wcstombs_s(&i,buffer,4096, awBuffer,2048 );
+    wcstombs_s(&i,buffer, 4096, awBuffer, 2048);
     init_ffi(buffer);
 
   // Attach to console when present (e.g., 'flutter run') or create a
@@ -37,9 +37,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   project.set_dart_entrypoint_arguments(std::move(command_line_arguments));
 
+  int width = load_int_property("window_width", 600);
+  int height = load_int_property("window_height", 800);
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
-  Win32Window::Size size(1280, 720);
+  Win32Window::Size size(std::max(width, 50), std::max(height, 50));
   if (!window.CreateAndShow(L"jenny", origin, size)) {
     return EXIT_FAILURE;
   }

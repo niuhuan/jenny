@@ -15,4 +15,11 @@ class AppDelegate: FlutterAppDelegate {
         return true
     }
     
+    override func applicationWillFinishLaunching(_ notification: Notification)   {
+        super.applicationWillFinishLaunching(notification)
+        let width = load_int_property("window_width", 600);
+        let height = load_int_property("window_height", 800);
+        mainFlutterWindow?.setContentSize(NSSize.init(width: CGFloat(max(width,50)), height: CGFloat(max(height,50))));
+    }
+    
 }

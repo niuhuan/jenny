@@ -1,9 +1,7 @@
+v0.0.9
+
+- [x] ✨ Recover window size on desktop
+
 v0.0.8
 
 - [x] ♻️ Fix app nav bar color
-
-v0.0.7
-
-- [x] ✨️ Delete download at exported
-- [x] ♻️ Don't shark
-- [x] ✨ PING api speed

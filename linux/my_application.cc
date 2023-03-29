@@ -1,5 +1,6 @@
 #include "my_application.h"
 #include "methods_plugin.h"
+#include "rust.h"
 
 #include <flutter_linux/flutter_linux.h>
 #ifdef GDK_WINDOWING_X11
@@ -48,7 +49,9 @@ static void my_application_activate(GApplication* application) {
     gtk_window_set_title(window, "jenny");
   }
 
-  gtk_window_set_default_size(window, 1280, 720);
+  int window_width = load_int_property("window_width", 600);
+  int window_height = load_int_property("window_height", 800);
+  gtk_window_set_default_size(window, std::max(window_width, 50), std::max(window_height, 50));
   gtk_widget_show(GTK_WIDGET(window));
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
