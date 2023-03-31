@@ -326,8 +326,19 @@ class Methods {
     });
   }
 
-  Future export_jm_zip_single(int id, String folder, String? rename, bool deleteExported) {
+  Future export_jm_zip_single(
+      int id, String folder, String? rename, bool deleteExported) {
     return _invoke("export_jm_zip_single", {
+      "id": id,
+      "folder": folder,
+      "rename": rename,
+      "delete_exported": deleteExported,
+    });
+  }
+
+  Future export_jm_jpegs_zip_single(
+      int id, String folder, String? rename, bool deleteExported) {
+    return _invoke("export_jm_jpegs_zip_single", {
       "id": id,
       "folder": folder,
       "rename": rename,
@@ -343,7 +354,8 @@ class Methods {
     });
   }
 
-  Future export_jm_jmi_single(int id, String folder, String? rename, bool deleteExported) {
+  Future export_jm_jmi_single(
+      int id, String folder, String? rename, bool deleteExported) {
     return _invoke("export_jm_jmi_single", {
       "id": id,
       "folder": folder,
@@ -411,8 +423,16 @@ class Methods {
     return await _channel.invokeMethod("iosGetDocumentDir");
   }
 
+  Future<String> androidDefaultExportsDir() async {
+    return await _channel.invokeMethod("androidDefaultExportsDir");
+  }
+
   Future<String> getDownloadAndExportTo() async {
     return await _invoke("get_download_and_export_to", "");
+  }
+
+  Future<String> getHomeDir() async {
+    return await _invoke("getHomeDir", "");
   }
 
   Future setDownloadAndExportTo(String path) async {
@@ -422,6 +442,14 @@ class Methods {
   Future<int> ping(String idx) async {
     print("PING $idx");
     return int.parse(await _invoke("ping_server", idx));
+  }
+
+  Future mkdirs(String path) {
+    return _invoke("mkdirs", path);
+  }
+
+  Future androidMkdirs(String path) async {
+    return await _channel.invokeMethod("androidMkdirs", path);
   }
 }
 

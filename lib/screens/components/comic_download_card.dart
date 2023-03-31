@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import '../../basic/methods.dart';
@@ -43,7 +45,7 @@ class ComicDownloadCard extends StatelessWidget {
               children: [
                 Text(comic.name, style: titleStyle),
                 Container(height: 4),
-                Text(comic.author, style: authorStyle),
+                Text(_author(comic.author), style: authorStyle),
                 Container(height: 4),
                 _buildCategoryRow(),
                 Container(height: 4),
@@ -112,5 +114,13 @@ class ComicDownloadCard extends StatelessWidget {
       Text(category.title!),
       Container(width: 15),
     ];
+  }
+}
+
+String _author(String author) {
+  try {
+    return List.of(jsonDecode(author)).cast<String>().join(", ");
+  } catch (e) {
+    return author;
   }
 }

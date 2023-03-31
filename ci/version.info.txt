@@ -1,5 +1,6 @@
 v0.0.9
 
+- [x] ♻️ Import notice and export path
 - [x] ✨ Recover window size on desktop
 
 v0.0.8

@@ -1,4 +1,4 @@
-package niuhuan.jasmine;
+package opensource.jenny;
 
 public class Jni {
 

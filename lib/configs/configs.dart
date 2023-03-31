@@ -15,6 +15,7 @@ import 'package:jenny/configs/web_dav_username.dart';
 
 import 'auto_clean.dart';
 import 'download_and_export_to.dart';
+import 'export_path.dart';
 import 'export_rename.dart';
 import 'is_pro.dart';
 import 'network_api_host.dart';
@@ -46,6 +47,7 @@ Future initConfigs() async {
   await initAutoClean();
   await initTheme();
   await reloadIsPro();
+  await initExportPath();
   await initDownloadThreadCount();
   await initProxy();
   await initUsingRightClickPop();

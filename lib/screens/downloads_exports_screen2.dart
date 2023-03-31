@@ -157,7 +157,7 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
           }
           if (Platform.isAndroid) {
             if (androidVersion >= 30) {
-              if (!(await Permission.manageExternalStorage.request())
+              if (!(await Permission.storage.request())
                   .isGranted) {
                 throw Exception("申请权限被拒绝");
               }

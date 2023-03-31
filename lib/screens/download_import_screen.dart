@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../basic/commons.dart';
 import '../basic/methods.dart';
+import '../configs/import_notice.dart';
 import '../configs/is_pro.dart';
 import '../configs/android_version.dart';
 import 'components/content_loading.dart';
@@ -60,11 +61,6 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
       );
     }
 
-    List<Widget> actions = [];
-
-    actions.add(_fileImportButton());
-    actions.add(_importDirFilesZipButton());
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('导入'),
@@ -75,7 +71,14 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
             padding: const EdgeInsets.all(10),
             child: Text(_importMessage),
           ),
-          ...actions,
+          Container(height: 20),
+          importNotice(context),
+          Container(height: 20),
+          _fileImportButton(),
+          Container(height: 20),
+          _importDirFilesZipButton(),
+          Container(height: 20),
+          Container(height: 20),
         ],
       ),
     );
@@ -87,7 +90,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
       onPressed: () async {
         if (Platform.isAndroid) {
           if (androidVersion >= 30) {
-            if (!(await Permission.manageExternalStorage.request()).isGranted) {
+            if (!(await Permission.storage.request()).isGranted) {
               throw Exception("申请权限被拒绝");
             }
           } else {

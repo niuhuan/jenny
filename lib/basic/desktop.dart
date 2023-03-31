@@ -4,8 +4,8 @@ import 'package:jenny/basic/methods.dart';
 import 'package:window_manager/window_manager.dart';
 
 onDesktopStart() {
-  windowManager.ensureInitialized();
   if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
+    windowManager.ensureInitialized();
     windowManager.addListener(winListener);
   }
 }

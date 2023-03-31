@@ -64,7 +64,7 @@ Widget downloadAndExportToSetting() {
             if ("选择新位置" == result) {
               if (Platform.isAndroid) {
                 if (androidVersion >= 30) {
-                  if (!(await Permission.manageExternalStorage.request())
+                  if (!(await Permission.storage.request())
                       .isGranted) {
                     throw Exception("申请权限被拒绝");
                   }

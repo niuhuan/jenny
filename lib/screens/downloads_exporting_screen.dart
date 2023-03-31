@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jenny/basic/methods.dart';
 
 import '../basic/commons.dart';
+import '../configs/export_path.dart';
 import '../configs/export_rename.dart';
 import '../configs/is_pro.dart';
 import 'components/content_loading.dart';
@@ -70,6 +71,8 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
         //   child: const Text("导出PKZ"),
         // ),
         Container(height: 20),
+        displayExportPathInfo(),
+        Container(height: 20),
         SwitchListTile(
           title: const Text("导出后删除下载的漫画"),
           value: deleteExport,
@@ -80,77 +83,86 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
           },
         ),
         Container(height: 20),
-        MaterialButton(
-          onPressed: _exportPkis,
-          child: Text(
-            "分别导出JMI" + (!isPro ? "\n(发电后使用)" : ""),
-            style: TextStyle(
-              color: !isPro ? Colors.grey : null,
-            ),
-            textAlign: TextAlign.center,
-          ),
+        _buildButtonInner(
+          _exportJmis,
+          "分别导出JMI" + (!isPro ? "\n(发电后使用)" : ""),
         ),
         Container(height: 20),
-        MaterialButton(
-          onPressed: _exportZips,
-          child: Text(
-            "分别导出JM.ZIP" + (!isPro ? "\n(发电后使用)" : ""),
-            style: TextStyle(
-              color: !isPro ? Colors.grey : null,
-            ),
-            textAlign: TextAlign.center,
-          ),
+        _buildButtonInner(
+          _exportZips,
+          "分别导出JM.ZIP" + (!isPro ? "\n(发电后使用)" : ""),
         ),
+        Container(height: 20),
+        _buildButtonInner(
+          _exportJpegZips,
+          "分别导出JPEGS.ZIP" + (!isPro ? "\n(发电后使用)" : ""),
+        ),
+        Container(height: 20),
         Container(height: 20),
       ],
     );
   }
 
-  _exportPkis() async {
+  Widget _buildButtonInner(VoidCallback? onPressed, String text) {
+    return MaterialButton(
+      onPressed: onPressed,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Container(
+            width: constraints.maxWidth,
+            padding: const EdgeInsets.all(15),
+            color:
+                (Theme.of(context).textTheme.bodyText1?.color ?? Colors.black)
+                    .withOpacity(.05),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  _exportJmis() async {
     if (!isPro) {
       defaultToast(context, "请先发电鸭");
       return;
     }
-    late String? path;
-    try {
-      path = Platform.isIOS
-          ? await methods.iosGetDocumentDir()
-          : await chooseFolder(context);
-    } catch (e) {
-      defaultToast(context, "$e");
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出JMI${showExportPath()}")) {
       return;
     }
-    print("path $path");
-    if (path != null) {
-      try {
+    try {
+      setState(() {
+        exporting = true;
+      });
+      final path = await attachExportPath();
+      for (var value in widget.idList) {
+        var ab = await methods.downloadById(value);
         setState(() {
-          exporting = true;
+          exportMessage = "正在导出 : " + (ab?.album?.name ?? "");
         });
-        for (var value in widget.idList) {
-          var ab = await methods.downloadById(value);
-          setState(() {
-            exportMessage = "正在导出 : " + (ab?.album?.name ?? "");
-          });
-          String? rename;
-          if (currentExportRename()) {
-            rename = await displayTextInputDialog(context, title: "导出重命名", src: ab?.album?.name ?? "");
-          }
-          await methods.export_jm_jmi_single(
-            value,
-            path,
-            rename,
-            deleteExport,
-          );
+        String? rename;
+        if (currentExportRename()) {
+          rename = await displayTextInputDialog(context,
+              title: "导出重命名", src: ab?.album?.name ?? "");
         }
-        exported = true;
-      } catch (err) {
-        e = err;
-        exportFail = true;
-      } finally {
-        setState(() {
-          exporting = false;
-        });
+        await methods.export_jm_jmi_single(
+          value,
+          path,
+          rename,
+          deleteExport,
+        );
       }
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
     }
   }
 
@@ -159,46 +171,82 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
       defaultToast(context, "请先发电鸭");
       return;
     }
-    late String? path;
-    try {
-      path = Platform.isIOS
-          ? await methods.iosGetDocumentDir()
-          : await chooseFolder(context);
-    } catch (e) {
-      defaultToast(context, "$e");
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出ZIP${showExportPath()}")) {
       return;
     }
-    print("path $path");
-    if (path != null) {
-      try {
+    try {
+      setState(() {
+        exporting = true;
+      });
+      final path = await attachExportPath();
+      for (var value in widget.idList) {
+        var ab = await methods.downloadById(value);
         setState(() {
-          exporting = true;
+          exportMessage = "正在导出 : " + (ab?.album?.name ?? "");
         });
-        for (var value in widget.idList) {
-          var ab = await methods.downloadById(value);
-          setState(() {
-            exportMessage = "正在导出 : " + (ab?.album?.name ?? "");
-          });
-          String? rename;
-          if (currentExportRename()) {
-            rename = await displayTextInputDialog(context, title: "导出重命名", src: ab?.album?.name ?? "");
-          }
-          await methods.export_jm_zip_single(
-            value,
-            path,
-            rename,
-            deleteExport,
-          );
+        String? rename;
+        if (currentExportRename()) {
+          rename = await displayTextInputDialog(context,
+              title: "导出重命名", src: ab?.album?.name ?? "");
         }
-        exported = true;
-      } catch (err) {
-        e = err;
-        exportFail = true;
-      } finally {
-        setState(() {
-          exporting = false;
-        });
+        await methods.export_jm_zip_single(
+          value,
+          path,
+          rename,
+          deleteExport,
+        );
       }
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
+    }
+  }
+
+  _exportJpegZips() async {
+    if (!isPro) {
+      defaultToast(context, "请先发电鸭");
+      return;
+    }
+    if (!await confirmDialog(
+        context, "导出确认", "将您所选的漫画分别导出JPEGS.ZIP${showExportPath()}")) {
+      return;
+    }
+    try {
+      setState(() {
+        exporting = true;
+      });
+      final path = await attachExportPath();
+      for (var value in widget.idList) {
+        var ab = await methods.downloadById(value);
+        setState(() {
+          exportMessage = "正在导出 : " + (ab?.album?.name ?? "");
+        });
+        String? rename;
+        if (currentExportRename()) {
+          rename = await displayTextInputDialog(context,
+              title: "导出重命名", src: ab?.album?.name ?? "");
+        }
+        await methods.export_jm_jpegs_zip_single(
+          value,
+          path,
+          rename,
+          deleteExport,
+        );
+      }
+      exported = true;
+    } catch (err) {
+      e = err;
+      exportFail = true;
+    } finally {
+      setState(() {
+        exporting = false;
+      });
     }
   }
 

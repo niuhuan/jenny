@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jenny/basic/methods.dart';
 
 import '../basic/commons.dart';
+import '../configs/export_path.dart';
 import '../configs/export_rename.dart';
 import '../configs/is_pro.dart';
 import 'components/content_loading.dart';
@@ -69,6 +70,8 @@ class _DownloadsExportingScreen2State extends State<DownloadsExportingScreen2> {
         //   onPressed: _exportPkz,
         //   child: const Text("导出PKZ"),
         // ),
+        Container(height: 20),
+        displayExportPathInfo(),
         Container(height: 20),
         SwitchListTile(
           value: deleteExport,
