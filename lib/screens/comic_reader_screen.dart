@@ -19,7 +19,6 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../configs/no_animation.dart';
-import '../configs/theme.dart';
 import '../configs/volume_key_control.dart';
 import 'components/images.dart';
 import 'components/right_click_pop.dart';

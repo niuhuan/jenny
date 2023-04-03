@@ -89,14 +89,9 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
       height: 80,
       onPressed: () async {
         if (Platform.isAndroid) {
-          if (androidVersion >= 30) {
-            if (!(await Permission.storage.request()).isGranted) {
-              throw Exception("申请权限被拒绝");
-            }
-          } else {
-            if (!(await Permission.storage.request()).isGranted) {
-              throw Exception("申请权限被拒绝");
-            }
+          if (!(await Permission.storage.request()).isGranted) {
+            defaultToast(context, "申请权限被拒绝");
+            return;
           }
         }
         String? path;
@@ -162,6 +157,9 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
     return MaterialButton(
       height: 80,
       onPressed: () async {
+        if (!(await Permission.storage.request()).isGranted) {
+          throw Exception("申请权限被拒绝");
+        }
         late String? path;
         try {
           path = await chooseFolder(context);
