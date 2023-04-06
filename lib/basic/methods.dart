@@ -451,6 +451,20 @@ class Methods {
   Future androidMkdirs(String path) async {
     return await _channel.invokeMethod("androidMkdirs", path);
   }
+
+  Future<String> picturesDir() async {
+    return await _channel.invokeMethod("picturesDir");
+  }
+
+  Future<String> copyPictureToFolder(String folder, String path) async {
+    return await _invoke(
+      "copyPictureToFolder",
+      {
+        "folder": folder,
+        "path": path,
+      },
+    );
+  }
 }
 
 class _Response {

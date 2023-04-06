@@ -56,6 +56,7 @@ class MainActivity : FlutterActivity() {
                 "androidMkdirs" -> androidMkdirs(
                     call.arguments<String>() ?: throw Exception("need arg"),
                  )
+                "picturesDir" -> picturesDir().absolutePath
                 else -> result.notImplemented()
             }
         }
@@ -201,17 +202,22 @@ class MainActivity : FlutterActivity() {
         return Environment.getExternalStorageDirectory().absolutePath
     }
 
+    private fun picturesDir(): File {
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            ?: throw java.lang.IllegalStateException()
+    }
+
     private fun downloadsDir(): File {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             ?: throw java.lang.IllegalStateException()
     }
 
-    private fun defaultPikapikaDir(): File {
+    private fun defaultJennyDir(): File {
         return File(downloadsDir(), "jenny")
     }
 
     private fun androidDefaultExportsDir(): File {
-        return File(defaultPikapikaDir(), "exports")
+        return File(defaultJennyDir(), "exports")
     }
 
     private fun androidMkdirs(path: String) {

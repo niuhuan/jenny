@@ -155,17 +155,8 @@ class _DownloadsExportScreen2State extends State<DownloadsExportScreen2> {
             defaultToast(context, "请选择导出的内容");
             return;
           }
-          if (Platform.isAndroid) {
-            if (androidVersion >= 30) {
-              if (!(await Permission.storage.request())
-                  .isGranted) {
-                throw Exception("申请权限被拒绝");
-              }
-            } else {
-              if (!(await Permission.storage.request()).isGranted) {
-                throw Exception("申请权限被拒绝");
-              }
-            }
+          if(!await androidMangeStorageRequest()) {
+            throw Exception("申请权限被拒绝");
           }
           final exported = await Navigator.of(context).push(
             MaterialPageRoute(

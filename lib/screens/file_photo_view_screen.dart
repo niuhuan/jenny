@@ -25,11 +25,21 @@ class FilePhotoViewScreen extends StatelessWidget {
                 String? choose = await chooseListDialog(
                   context,
                   title: '请选择',
-                  values: ['保存图片'],
+                  values: [
+                    ...Platform.isAndroid || Platform.isIOS
+                        ? [
+                      '保存图片到相册',
+                    ]
+                        : [],
+                    '保存图片到文件',
+                  ],
                 );
                 switch (choose) {
-                  case '保存图片':
+                  case '保存图片到相册':
                     saveImageFileToGallery(context, filePath);
+                    break;
+                  case '保存图片到文件':
+                    saveImageFileToFile(context, filePath);
                     break;
                 }
               },

@@ -93,10 +93,8 @@ Future<String> attachExportPath() async {
   if (Platform.isIOS) {
     path = await methods.iosGetDocumentDir();
   } else {
-    if (Platform.isAndroid) {
-      if (!(await Permission.storage.request()).isGranted) {
-        throw Exception("申请权限被拒绝");
-      }
+    if(!await androidMangeStorageRequest()) {
+      throw Exception("申请权限被拒绝");
     }
     path = _currentExportPath;
   }

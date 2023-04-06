@@ -88,11 +88,8 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
     return MaterialButton(
       height: 80,
       onPressed: () async {
-        if (Platform.isAndroid) {
-          if (!(await Permission.storage.request()).isGranted) {
-            defaultToast(context, "申请权限被拒绝");
-            return;
-          }
+        if(!await androidMangeStorageRequest()) {
+          defaultToast(context, "申请权限被拒绝");
         }
         String? path;
         if (Platform.isAndroid) {
@@ -157,7 +154,7 @@ class _DownloadImportScreenState extends State<DownloadImportScreen> {
     return MaterialButton(
       height: 80,
       onPressed: () async {
-        if (!(await Permission.storage.request()).isGranted) {
+        if(!await androidMangeStorageRequest()) {
           throw Exception("申请权限被拒绝");
         }
         late String? path;

@@ -37,8 +37,7 @@ Future<T?> chooseListDialog<T>(BuildContext context,
       return SimpleDialog(
         title: Text(title),
         children: [
-          ...values.map((e) =>
-              SimpleDialogOption(
+          ...values.map((e) => SimpleDialogOption(
                 onPressed: () {
                   Navigator.of(context).pop(e);
                 },
@@ -46,11 +45,11 @@ Future<T?> chooseListDialog<T>(BuildContext context,
               )),
           ...tips != null
               ? [
-            Container(
-              padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
-              child: Text(tips),
-            ),
-          ]
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
+                    child: Text(tips),
+                  ),
+                ]
               : [],
         ],
       );
@@ -58,7 +57,8 @@ Future<T?> chooseListDialog<T>(BuildContext context,
   );
 }
 
-Future<T?> chooseMapDialog<T>(BuildContext buildContext, {
+Future<T?> chooseMapDialog<T>(
+  BuildContext buildContext, {
   required String title,
   required Map<String, T> values,
 }) async {
@@ -68,30 +68,38 @@ Future<T?> chooseMapDialog<T>(BuildContext buildContext, {
       return SimpleDialog(
         title: Text(title),
         children: values.entries
-            .map((e) =>
-            SimpleDialogOption(
-              child: Text(e.key),
-              onPressed: () {
-                Navigator.of(context).pop(e.value);
-              },
-            ))
+            .map((e) => SimpleDialogOption(
+                  child: Text(e.key),
+                  onPressed: () {
+                    Navigator.of(context).pop(e.value);
+                  },
+                ))
             .toList(),
       );
     },
   );
 }
 
-Future saveImageFileToGallery(BuildContext context, String path) async {
+Future<bool> androidGalleryPermissionRequest() async {
+  if (Platform.isAndroid && androidVersion < 33) {
+    return await (Permission.storage.request()).isGranted;
+  }
+  return true;
+}
+
+Future<bool> androidMangeStorageRequest() async {
   if (Platform.isAndroid) {
-    if (androidVersion >= 30) {
-      if (!(await Permission.storage.request()).isGranted) {
-        throw Exception("申请权限被拒绝");
-      }
-    } else {
-      if (!(await Permission.storage.request()).isGranted) {
-        throw Exception("申请权限被拒绝");
-      }
+    if (androidVersion < 30) {
+      return await (Permission.storage.request()).isGranted;
     }
+    return await (Permission.manageExternalStorage.request()).isGranted;
+  }
+  return true;
+}
+
+Future saveImageFileToGallery(BuildContext context, String path) async {
+  if (!await androidGalleryPermissionRequest()) {
+    throw Exception("申请权限被拒绝");
   }
   if (Platform.isIOS || Platform.isAndroid) {
     await methods.saveImageFileToGallery(path);
@@ -101,9 +109,31 @@ Future saveImageFileToGallery(BuildContext context, String path) async {
   defaultToast(context, "暂不支持该平台");
 }
 
+Future saveImageFileToFile(BuildContext context, String path) async {
+  if (!await androidGalleryPermissionRequest()) {
+    throw Exception("申请权限被拒绝");
+  }
+  late String folder;
+  if (Platform.isAndroid) {
+    folder = await methods.picturesDir();
+  } else if (Platform.isIOS) {
+    folder = await methods.iosGetDocumentDir() + "/pictures";
+  } else {
+    var _f = await chooseFolder(context);
+    if (_f != null) {
+      folder = _f;
+    }
+  }
+  try {
+    await methods.copyPictureToFolder(folder, path);
+    defaultToast(context, "保存成功");
+  } catch (e) {
+    defaultToast(context, "保存失败 : $e");
+  }
+}
+
 Future<SortBy?> chooseSortBy(BuildContext context) async {
-  return await chooseListDialog(
-      context, title: "请选择排序方式", values: sorts);
+  return await chooseListDialog(context, title: "请选择排序方式", values: sorts);
 }
 
 /// 将字符串前面加0直至满足len位
@@ -129,10 +159,10 @@ final _controller = TextEditingController();
 
 Future<String?> displayTextInputDialog(BuildContext context,
     {String? title,
-      String src = "",
-      String? hint,
-      String? desc,
-      bool isPasswd = false}) {
+    String src = "",
+    String? hint,
+    String? desc,
+    bool isPasswd = false}) {
   _controller.text = src;
   return showDialog(
     context: context,
@@ -151,21 +181,20 @@ Future<String?> displayTextInputDialog(BuildContext context,
               ...(desc == null
                   ? []
                   : [
-                Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
-                  child: Text(
-                    desc,
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Theme
-                            .of(context)
-                            .textTheme
-                            .bodyText1
-                            ?.color
-                            ?.withOpacity(.5)),
-                  ),
-                )
-              ]),
+                      Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        child: Text(
+                          desc,
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.color
+                                  ?.withOpacity(.5)),
+                        ),
+                      )
+                    ]),
             ],
           ),
         ),
@@ -195,35 +224,34 @@ void copyToClipBoard(BuildContext context, String string) {
 }
 
 /// 显示一个确认框, 用户关闭弹窗以及选择否都会返回false, 仅当用户选择确定时返回true
-Future<bool> confirmDialog(BuildContext context, String title,
-    String content) async {
+Future<bool> confirmDialog(
+    BuildContext context, String title, String content) async {
   return await showDialog(
-      context: context,
-      builder: (context) =>
-          AlertDialog(
-            title: Text(title),
-            content: new SingleChildScrollView(
-              child: new ListBody(
-                children: <Widget>[
-                  new Text(content),
+          context: context,
+          builder: (context) => AlertDialog(
+                title: Text(title),
+                content: new SingleChildScrollView(
+                  child: new ListBody(
+                    children: <Widget>[
+                      new Text(content),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  new MaterialButton(
+                    child: new Text('取消'),
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                  ),
+                  new MaterialButton(
+                    child: new Text('确定'),
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                    },
+                  ),
                 ],
-              ),
-            ),
-            actions: <Widget>[
-              new MaterialButton(
-                child: new Text('取消'),
-                onPressed: () {
-                  Navigator.of(context).pop(false);
-                },
-              ),
-              new MaterialButton(
-                child: new Text('确定'),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
-          )) ??
+              )) ??
       false;
 }
 
