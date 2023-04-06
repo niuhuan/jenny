@@ -1,5 +1,6 @@
 v0.1.1
 
+- [x] 🐛 Fix desktop init
 - [x] 🐛 Fix android-30-33 import/export permission request
 - [x] ✨ Save image to file system
 
