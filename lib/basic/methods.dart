@@ -236,6 +236,10 @@ class Methods {
     return _invoke("load_username", "");
   }
 
+  Future<String> loadLastLoginUsername() {
+    return _invoke("loadLastLoginUsername", "");
+  }
+
   Future<String> loadPassword() {
     return _invoke("load_password", "");
   }

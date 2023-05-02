@@ -17,7 +17,7 @@ class _ProScreenState extends State<ProScreen> {
 
   @override
   void initState() {
-    methods.loadUsername().then((value) {
+    methods.loadLastLoginUsername().then((value) {
       setState(() {
         _username = value;
       });

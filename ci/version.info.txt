@@ -1,18 +1,5 @@
-v0.1.1
+v0.1.2
 
-- [x] 🐛 Fix desktop init
-- [x] 🐛 Fix android-30-33 import/export permission request
-- [x] ✨ Save image to file system
-
-v0.1.0
-
-- [x] 🐛 Fix android-33 import/export permission request
-
-v0.0.9
-
-- [x] ♻️ Import notice and export path
-- [x] ✨ Recover window size on desktop
-
-v0.0.8
-
-- [x] ♻️ Fix app nav bar color
+- [x] ✨ I am a calculator
+- [x] ♻️ More signup address
+- [x] 🐛 Download 0/0 success

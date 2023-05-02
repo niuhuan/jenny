@@ -6,6 +6,8 @@ import 'package:jenny/basic/commons.dart';
 import 'package:jenny/basic/methods.dart';
 import 'package:jenny/configs/configs.dart';
 import 'package:jenny/configs/login.dart';
+import 'package:jenny/configs/passed.dart';
+import 'package:jenny/screens/calculator_screen.dart';
 
 import '../basic/web_dav_sync.dart';
 import 'app_screen.dart';
@@ -29,16 +31,28 @@ class _InitScreenState extends State<InitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff99dcd7),
-      body: ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: Container(
-          padding: const EdgeInsets.all(50),
-          child: Image.asset(
-            "lib/assets/startup.webp",
-            fit: BoxFit.contain,
+      backgroundColor: const Color(0xffeeeeee),
+      body: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/assets/backpoint.png'),
+                repeat: ImageRepeat.repeat,
+              ),
+            ),
           ),
-        ),
+          ConstrainedBox(
+            constraints: const BoxConstraints.expand(),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              child: Image.asset(
+                "lib/assets/startup.png",
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -47,13 +61,12 @@ class _InitScreenState extends State<InitScreen> {
     try {
       await methods.init();
       await initConfigs();
-      print("STATE : ${loginStatus}");
-      if (loginStatus == LoginStatus.notSet) {
+      if (!currentPassed()) {
         Future.delayed(Duration.zero, () async {
           await webDavSyncAuto(context);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) {
-              return firstLoginScreen;
+              return const CalculatorScreen();
             }),
           );
         });
