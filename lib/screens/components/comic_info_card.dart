@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jenny/basic/commons.dart';
 import 'package:jenny/basic/entities.dart';
+import 'package:jenny/configs/display_jmcode.dart';
 import 'package:jenny/screens/comic_search_screen.dart';
 
 import 'images.dart';
@@ -47,14 +49,35 @@ class ComicInfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                link
-                    ? GestureDetector(
-                        onLongPress: () {
-                          confirmCopy(context, comic.name);
-                        },
-                        child: Text(comic.name, style: titleStyle),
-                      )
-                    : Text(comic.name, style: titleStyle),
+                ...link
+                    ? [
+                        Text.rich(TextSpan(children: [
+                          TextSpan(
+                            text: comic.name,
+                            style: titleStyle,
+                            recognizer: LongPressGestureRecognizer()
+                              ..onLongPress = () {
+                                confirmCopy(context, comic.name);
+                              },
+                          ),
+                          ...currentDisplayJmcode()
+                              ? [
+                                  TextSpan(
+                                    text: "  (JM${comic.id})",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.orange.shade700,
+                                    ),
+                                    recognizer: LongPressGestureRecognizer()
+                                      ..onLongPress = () {
+                                        confirmCopy(context, "JM${comic.id}");
+                                      },
+                                  ),
+                                ]
+                              : [],
+                        ])),
+                      ]
+                    : [Text(comic.name, style: titleStyle)],
                 Container(height: 4),
                 link
                     ? GestureDetector(

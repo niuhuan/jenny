@@ -50,16 +50,16 @@ class FilePhotoViewScreen extends StatelessWidget {
             InkWell(
               onTap: () => Navigator.of(context).pop(),
               child: Container(
-                margin: EdgeInsets.only(top: 30),
-                padding: EdgeInsets.only(left: 4, right: 4),
+                margin: const EdgeInsets.only(top: 80),
+                padding: const EdgeInsets.only(left: 4, right: 4),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(.75),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8),
                     bottomRight: Radius.circular(8),
                   ),
                 ),
-                child: Icon(Icons.keyboard_backspace, color: Colors.white),
+                child: const Icon(Icons.keyboard_backspace, color: Colors.white),
               ),
             ),
           ],

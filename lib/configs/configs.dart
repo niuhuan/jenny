@@ -1,5 +1,6 @@
 import 'package:jenny/configs/android_display_mode.dart';
 import 'package:jenny/configs/android_version.dart';
+import 'package:jenny/configs/display_jmcode.dart';
 import 'package:jenny/configs/download_thread_count.dart';
 import 'package:jenny/configs/no_animation.dart';
 import 'package:jenny/configs/pager_column_number.dart';
@@ -62,4 +63,5 @@ Future initConfigs() async {
   await initDownloadAndExportTo();
   await initExportRename();
   await initLogin();
+  await initDisplayJmcode();
 }

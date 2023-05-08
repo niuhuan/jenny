@@ -7,6 +7,7 @@ import 'package:jenny/screens/downloads_exports_screen2.dart';
 import '../basic/commons.dart';
 import '../basic/web_dav_sync.dart';
 import '../configs/android_display_mode.dart';
+import '../configs/display_jmcode.dart';
 import '../configs/download_and_export_to.dart';
 import '../configs/export_rename.dart';
 import '../configs/no_animation.dart';
@@ -63,6 +64,7 @@ class _SettingsState extends State<SettingsScreen> {
           webDavPasswordSetting(),
           webDavSyncClick(context),
           const Divider(),
+          displayJmcodeSetting(),
           const Divider(),
           ListTile(
             onTap: () async {

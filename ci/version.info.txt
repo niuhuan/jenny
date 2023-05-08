@@ -1,5 +1,5 @@
-v0.1.2
+v0.1.3
 
-- [x] ✨ I am a calculator
-- [x] ♻️ More signup address
-- [x] 🐛 Download 0/0 success
+- [x] ✨ Copy comic code
+- [x] ♻️ Optimization ⚡
+- [x] ♻️ Preview images
