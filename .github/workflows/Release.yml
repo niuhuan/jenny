@@ -57,31 +57,31 @@ jobs:
         config:
           - target: linux
             host: ubuntu-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
           - target: windows
             host: windows-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
           - target: macos
             host: macos-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
           - target: ios
             host: macos-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
           - target: android-arm32
             host: ubuntu-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
           - target: android-arm64
             host: ubuntu-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
           - target: android-x86_64
             host: ubuntu-latest
-            flutter_version: '3.7.0'
+            flutter_version: '3.10.5'
             flutter_channel: 'stable'
 
     runs-on: ${{ matrix.config.host }}

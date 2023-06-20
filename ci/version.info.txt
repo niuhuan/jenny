@@ -1,5 +1,4 @@
-v0.1.3
+v0.1.4
 
-- [x] ✨ Copy comic code
-- [x] ♻️ Optimization ⚡
-- [x] ♻️ Preview images
+- [x] ✨ Copy comment content to clipboard
+- [x] ♻️ Upgrade flutter engine

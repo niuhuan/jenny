@@ -385,7 +385,12 @@ class _ComicCommentItemState extends State<_ComicCommentItem> {
                   },
                 ),
                 Container(height: 5),
-                Text(comment.content, style: connectStyle),
+                GestureDetector(
+                  onLongPress: () {
+                    confirmCopy(context, comment.content);
+                  },
+                  child: Text(comment.content, style: connectStyle),
+                ),
                 ...widget.gotoComic
                     ? [
                         Container(height: 8),
