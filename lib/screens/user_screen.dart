@@ -5,7 +5,7 @@ import 'package:jenny/screens/about_screen.dart';
 import 'package:jenny/screens/comments_screen.dart';
 import 'package:jenny/screens/components/avatar.dart';
 import 'package:jenny/screens/pro_screen.dart';
-import 'package:jenny/screens/settings_scree.dart';
+import 'package:jenny/screens/settings_screen.dart';
 import 'package:jenny/screens/view_log_screen.dart';
 
 import '../configs/is_pro.dart';
