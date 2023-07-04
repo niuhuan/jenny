@@ -58,7 +58,19 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.simple?.name ?? ""),
+        title: widget.simple != null
+            ? Text(widget.simple?.name ?? "")
+            : FutureBuilder(
+                future: _albumFuture,
+                builder: (BuildContext context,
+                    AsyncSnapshot<AlbumResponse> snapshot) {
+                  if (snapshot.connectionState != ConnectionState.done ||
+                      snapshot.hasError) {
+                    return const Text("");
+                  }
+                  return Text(snapshot.requireData.name);
+                },
+              ), // _albumFuture
         actions: [
           FutureBuilder(
             future: _albumFuture,
@@ -306,7 +318,7 @@ class _ComicSerialsState extends State<_ComicSerials> {
   Widget _buildOneButton() {
     return MyFlatButton(
       title: "开始阅读",
-      onPressed:  () {
+      onPressed: () {
         _push(
           widget.comicSimple,
           widget.album.series,
@@ -331,9 +343,9 @@ class _ComicSerialsState extends State<_ComicSerials> {
         children: widget.album.series.map((e) {
           return MaterialButton(
             elevation:
-            Theme.of(context).colorScheme.brightness == Brightness.light
-                ? 1
-                : 0,
+                Theme.of(context).colorScheme.brightness == Brightness.light
+                    ? 1
+                    : 0,
             focusElevation: 0,
             onPressed: () {
               _push(widget.comicSimple, widget.album.series, e.id, 0);
@@ -341,10 +353,10 @@ class _ComicSerialsState extends State<_ComicSerials> {
             color: Theme.of(context).colorScheme.brightness == Brightness.light
                 ? Colors.white
                 : Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .color!
-                .withOpacity(.17),
+                    .textTheme
+                    .bodyText1!
+                    .color!
+                    .withOpacity(.17),
             child: Text(
               e.sort + (e.name == "" ? "" : (" - ${e.name}")),
             ),
@@ -361,9 +373,9 @@ class _ComicSerialsState extends State<_ComicSerials> {
         children: widget.album.series.map((e) {
           return MaterialButton(
             elevation:
-            Theme.of(context).colorScheme.brightness == Brightness.light
-                ? 1
-                : 0,
+                Theme.of(context).colorScheme.brightness == Brightness.light
+                    ? 1
+                    : 0,
             focusElevation: 0,
             onPressed: () {
               _push(widget.comicSimple, widget.album.series, e.id, 0);
@@ -371,10 +383,10 @@ class _ComicSerialsState extends State<_ComicSerials> {
             color: Theme.of(context).colorScheme.brightness == Brightness.light
                 ? Colors.white
                 : Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .color!
-                .withOpacity(.17),
+                    .textTheme
+                    .bodyText1!
+                    .color!
+                    .withOpacity(.17),
             child: Text(
               e.sort + (e.name == "" ? "" : (" - ${e.name}")),
             ),

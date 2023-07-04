@@ -1,4 +1,4 @@
-v0.1.4
+v0.1.5
 
-- [x] ✨ Copy comment content to clipboard
-- [x] ♻️ Upgrade flutter engine
+- [x] ✨ Download comic link to online
+- [x] ♻️ Display comic title at future page

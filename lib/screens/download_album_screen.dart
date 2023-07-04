@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:jenny/basic/entities.dart';
 import 'package:jenny/basic/methods.dart';
+import 'package:jenny/screens/comic_info_screen.dart';
 import 'package:jenny/screens/components/comic_download_card.dart';
 import 'package:jenny/screens/components/item_builder.dart';
 import 'package:jenny/screens/components/my_flat_button.dart';
@@ -40,6 +41,21 @@ class _DownloadAlbumScreenState extends State<DownloadAlbumScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.album.name),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) {
+                    return ComicInfoScreen(widget.album.id, null);
+                  },
+                ),
+              );
+            },
+            icon: const Icon(Icons.settings_ethernet_outlined),
+          ),
+        ],
       ),
       body: ListView(
         children: [
