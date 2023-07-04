@@ -2,3 +2,4 @@ v0.1.5
 
 - [x] ✨ Download comic link to online
 - [x] ♻️ Display comic title at future page
+- [x] ♻️ Choose pro servers

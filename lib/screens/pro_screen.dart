@@ -59,6 +59,7 @@ class _ProScreenState extends State<ProScreen> {
               "登录账号才能确认发电状态\n"
               "点击\"我曾经发过电\"进同步发电状态\n"
               "点击\"我刚才发了电\"兑换作者给您的礼物卡\n"
+              "更换\"发电方式\"可能解决FAIL问题\n"
               "去\"关于\"界面找到维护地址用爱发电",
             ),
           ),
@@ -113,7 +114,6 @@ class _ProScreenState extends State<ProScreen> {
     );
   }
 }
-
 
 class ProServerNameWidget extends StatefulWidget {
   const ProServerNameWidget({Key? key}) : super(key: key);
