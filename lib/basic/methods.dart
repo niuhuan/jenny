@@ -368,6 +368,16 @@ class Methods {
     });
   }
 
+  Future export_cbzs_zip_single(
+      int id, String folder, String? rename, bool deleteExported) {
+    return _invoke("export_cbzs_zip_single", {
+      "id": id,
+      "folder": folder,
+      "rename": rename,
+      "delete_exported": deleteExported,
+    });
+  }
+
   Future import_jm_zip(String path) {
     print(path);
     return _invoke("import_jm_zip", path);
