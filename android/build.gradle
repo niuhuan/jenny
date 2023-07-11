@@ -1,25 +1,28 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.7.10'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:7.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
     repositories {
-        maven { url('https://maven.aliyun.com/repository/public') }
+        google()
+        mavenCentral()
     }
 }
 
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
     project.evaluationDependsOn(':app')
 }
 
