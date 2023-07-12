@@ -99,8 +99,8 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
         ),
         Container(height: 20),
         _buildButtonInner(
-          _exportCzbsZips,
-          "分别导出CZBS.ZIP" + (!isPro ? "\n(发电后使用)" : ""),
+          _exportCbzsZips,
+          "分别导出CBZS.ZIP" + (!isPro ? "\n(发电后使用)" : ""),
         ),
         Container(height: 20),
         Container(height: 20),
@@ -171,13 +171,13 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
     }
   }
 
-  _exportCzbsZips() async {
+  _exportCbzsZips() async {
     if (!isPro) {
       defaultToast(context, "请先发电鸭");
       return;
     }
     if (!await confirmDialog(
-        context, "导出确认", "将您所选的漫画分别导出czbs.zip${showExportPath()}")) {
+        context, "导出确认", "将您所选的漫画分别导出cbzs.zip${showExportPath()}")) {
       return;
     }
     try {
@@ -212,9 +212,6 @@ class _DownloadsExportingScreenState extends State<DownloadsExportingScreen> {
       });
     }
   }
-
-
-
 
   _exportZips() async {
     if (!isPro) {
