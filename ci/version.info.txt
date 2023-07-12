@@ -3,5 +3,5 @@ v0.1.5
 - [x] ✨ Download comic link to online
 - [x] ♻️ Display comic title at future page
 - [x] ♻️ Choose pro servers
-- [x] ✨ Export *.czb into zip
+- [x] ✨ Export *.cbz into zip
 - [x] 🐛 Fix export zip entries unix permission
