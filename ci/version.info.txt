@@ -2,3 +2,4 @@ v0.1.6
 
 - [x] ✨ Display actors
 - [x] ♻️ Hidden comment's html tags 
+- [x] ✨ Search from title
