@@ -52,14 +52,24 @@ class ComicInfoCard extends StatelessWidget {
                 ...link
                     ? [
                         Text.rich(TextSpan(children: [
-                          TextSpan(
-                            text: comic.name,
-                            style: titleStyle,
-                            recognizer: LongPressGestureRecognizer()
-                              ..onLongPress = () {
-                                confirmCopy(context, comic.name);
-                              },
-                          ),
+                          true
+                              ? TextSpan(
+                                  style: titleStyle,
+                                  children: titleProcess(comic.name, context),
+                                  recognizer: LongPressGestureRecognizer()
+                                    ..onLongPress = () {
+                                      confirmCopy(context, comic.name);
+                                    },
+                                )
+                              : TextSpan(
+                                  text: comic.name,
+                                  style: titleStyle,
+                                  children: [],
+                                  recognizer: LongPressGestureRecognizer()
+                                    ..onLongPress = () {
+                                      confirmCopy(context, comic.name);
+                                    },
+                                ),
                           ...currentDisplayJmcode()
                               ? [
                                   TextSpan(
@@ -127,5 +137,66 @@ class ComicInfoCard extends StatelessWidget {
       Text(category.title!),
       Container(width: 15),
     ];
+  }
+
+  List<TextSpan> titleProcess(String name, BuildContext context) {
+    RegExp regExp = RegExp(r"\[[^\]]+\]");
+    int start = 0;
+    List<TextSpan> result = [];
+    Iterable<Match> matches = regExp.allMatches(name);
+    for (Match match in matches) {
+      // =======
+      // if (match.start > start) {
+      //   result.add(TextSpan(text: name.substring(start, match.start)));
+      // }
+      // result.add(TextSpan(
+      //   text: name.substring(match.start, match.end),
+      //   style: const TextStyle(
+      //     color: Colors.blue,
+      //     decoration: TextDecoration.underline,
+      //   ),
+      //   recognizer: TapGestureRecognizer()
+      //     ..onTap = () {
+      //       Navigator.of(context).push(MaterialPageRoute(
+      //         builder: (BuildContext context) {
+      //           return ComicSearchScreen(
+      //             initKeywords: name.substring(match.start + 1, match.end - 1),
+      //           );
+      //         },
+      //       ));
+      //     },
+      // ));
+      // start = match.end;
+      // =======
+      if (match.start > start) {
+        result.add(TextSpan(text: name.substring(start, match.start + 1)));
+      }
+      result.add(TextSpan(
+        text: name.substring(match.start + 1, match.end - 1),
+        style: TextStyle(
+          // 30%蓝色 叠加本该有的颜色
+          color: Color.alphaBlend(Colors.blue.withOpacity(0.3),
+              Theme.of(context).textTheme.bodyText1!.color!),
+        ),
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (BuildContext context) {
+                return ComicSearchScreen(
+                  initKeywords: name.substring(match.start + 1, match.end - 1),
+                );
+              },
+            ));
+          },
+      ));
+      if (match.start > start) {
+        result.add(TextSpan(text: name.substring(match.end - 1, match.end)));
+      }
+      start = match.end;
+    }
+    if (start < name.length) {
+      result.add(TextSpan(text: name.substring(start)));
+    }
+    return result;
   }
 }
