@@ -163,7 +163,6 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                 ComicCommentsList(mode: "manhua", aid: widget.comicId),
                 _ComicRelatedList(album.relatedList),
               ];
-
               return Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +170,7 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
                   widget.simple == null
                       ? ComicInfoCard(albumToSimple(album), link: true)
                       : Container(),
-                  _buildTags(album.tags),
+                  _buildTags(album.tags, album.works),
                   ...(album.description.isEmpty
                       ? []
                       : [
@@ -215,56 +214,101 @@ class _ComicInfoScreenState extends State<ComicInfoScreen> with RouteAware {
     );
   }
 
-  Widget _buildTags(List<String> tags) {
+  Widget _buildTags(List<String> tags, List<String> works) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
           width: constraints.maxWidth,
           padding: const EdgeInsets.all(10),
           child: Wrap(
-            children: tags.map((e) {
-              return InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return ComicSearchScreen(initKeywords: e);
-                    }),
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                    top: 3,
-                    bottom: 3,
-                  ),
-                  margin: const EdgeInsets.only(
-                    left: 5,
-                    right: 5,
-                    top: 3,
-                    bottom: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.pink.shade100,
-                    border: Border.all(
-                      style: BorderStyle.solid,
-                      color: Colors.pink.shade400,
+            children: [
+              ...tags.map((e) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return ComicSearchScreen(initKeywords: e);
+                      }),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 3,
+                      bottom: 3,
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Text(
-                    e,
-                    style: TextStyle(
-                      color: Colors.pink.shade500,
-                      height: 1.4,
+                    margin: const EdgeInsets.only(
+                      left: 5,
+                      right: 5,
+                      top: 3,
+                      bottom: 3,
                     ),
-                    strutStyle: const StrutStyle(
-                      height: 1.4,
+                    decoration: BoxDecoration(
+                      color: Colors.pink.shade100,
+                      border: Border.all(
+                        style: BorderStyle.solid,
+                        color: Colors.pink.shade400,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    ),
+                    child: Text(
+                      e,
+                      style: TextStyle(
+                        color: Colors.pink.shade500,
+                        height: 1.4,
+                      ),
+                      strutStyle: const StrutStyle(
+                        height: 1.4,
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+              ...works.map((e) {
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return ComicSearchScreen(initKeywords: e);
+                      }),
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 3,
+                      bottom: 3,
+                    ),
+                    margin: const EdgeInsets.only(
+                      left: 5,
+                      right: 5,
+                      top: 3,
+                      bottom: 3,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.shade100,
+                      border: Border.all(
+                        style: BorderStyle.solid,
+                        color: Colors.blue.shade400,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                    ),
+                    child: Text(
+                      e,
+                      style: TextStyle(
+                        color: Colors.blue.shade500,
+                        height: 1.4,
+                      ),
+                      strutStyle: const StrutStyle(
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ],
           ),
         );
       },
