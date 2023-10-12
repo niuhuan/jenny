@@ -101,7 +101,15 @@ class _UserScreenState extends State<UserScreen>
         child = _buildSelfInfoCard();
         break;
       case LoginStatus.loginField:
-        child = _buildLoginButton("登录失败/点击重试");
+        child = Column(
+          children: [
+            Expanded(child: Container()),
+            _buildLoginButton("登录失败/点击重试"),
+            Container(height: 2),
+            _buildLoginMessage(loginMessage),
+            Expanded(child: Container()),
+          ],
+        );
         break;
     }
     return Container(
@@ -303,6 +311,18 @@ class _UserScreenState extends State<UserScreen>
           },
         ));
       },
+    );
+  }
+
+  Widget _buildLoginMessage(String loginMessage) {
+    if (loginMessage == "") {
+      loginMessage = "未知的错误";
+    } else if (loginMessage.contains("error sending") || loginMessage.contains("timeout")) {
+      loginMessage = "请检查网络链接或代理设置";
+    }
+    return Text(
+      loginMessage,
+      style: const TextStyle(color: Colors.red),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jenny/basic/commons.dart';
 import 'package:jenny/basic/entities.dart';
 import 'package:jenny/configs/display_jmcode.dart';
+import 'package:jenny/configs/search_title_words.dart';
 import 'package:jenny/screens/comic_search_screen.dart';
 
 import 'images.dart';
@@ -52,7 +53,7 @@ class ComicInfoCard extends StatelessWidget {
                 ...link
                     ? [
                         Text.rich(TextSpan(children: [
-                          true
+                          currentSearchTitleWords()
                               ? TextSpan(
                                   style: titleStyle,
                                   children: titleProcess(comic.name, context),

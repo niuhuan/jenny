@@ -12,6 +12,7 @@ import '../configs/download_and_export_to.dart';
 import '../configs/export_rename.dart';
 import '../configs/no_animation.dart';
 import '../configs/proxy.dart';
+import '../configs/search_title_words.dart';
 import '../configs/theme.dart';
 import '../configs/using_right_click_pop.dart';
 import '../configs/volume_key_control.dart';
@@ -84,6 +85,8 @@ class _SettingsState extends State<SettingsScreen> {
             },
             title: const Text("导出下载到目录(即使没有下载完)"),
           ),
+          const Divider(),
+          searchTitleWordsSetting(),
           const Divider(),
         ],
       ),

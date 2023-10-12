@@ -1,5 +1,5 @@
-v0.1.6
+v0.1.7
 
-- [x] ✨ Display actors
-- [x] ♻️ Hidden comment's html tags 
-- [x] ✨ Search from title
+- [x] 🐛 Fix copy error
+- [x] ♻️ Title words setting
+- [x] ♻️ Login error tips
