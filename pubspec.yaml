@@ -3,7 +3,7 @@ description: jenny comic browser
 
 publish_to: 'none'
 
-version: 0.1.6+16
+version: 0.1.8+18
 
 environment:
   sdk: ">=2.15.1 <3.0.0"
