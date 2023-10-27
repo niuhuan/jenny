@@ -27,6 +27,8 @@
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
 		7DB5A5865B781585F59E6475 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B8F784BBDBC6C6656C7DC30 /* Pods_Runner.framework */; };
+		DDAC4EF42AEB96C00094D212 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDAC4EF32AEB96C00094D212 /* SystemConfiguration.framework */; };
+		DDAC4EF62AEB96D10094D212 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDAC4EF52AEB96D10094D212 /* Foundation.framework */; };
 		DDCD896A277EDA920009A939 /* librust.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDCD8969277EDA920009A939 /* librust.a */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,8 @@
 		7B8F784BBDBC6C6656C7DC30 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		ACE48CCDC39969BBA968C3C2 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		DDAC4EF32AEB96C00094D212 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DDAC4EF52AEB96D10094D212 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DDCD8968277EDA860009A939 /* rust.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust.h; sourceTree = "<group>"; };
 		DDCD8969277EDA920009A939 /* librust.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = librust.a; sourceTree = "<group>"; };
 		DDCD896C277EDAF80009A939 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDAC4EF62AEB96D10094D212 /* Foundation.framework in Frameworks */,
+				DDAC4EF42AEB96C00094D212 /* SystemConfiguration.framework in Frameworks */,
 				DDCD896A277EDA920009A939 /* librust.a in Frameworks */,
 				7DB5A5865B781585F59E6475 /* Pods_Runner.framework in Frameworks */,
 			);
@@ -161,6 +167,8 @@
 		D73912EC22F37F3D000D13A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DDAC4EF52AEB96D10094D212 /* Foundation.framework */,
+				DDAC4EF32AEB96C00094D212 /* SystemConfiguration.framework */,
 				DDCD8969277EDA920009A939 /* librust.a */,
 				DDCD8968277EDA860009A939 /* rust.h */,
 				7B8F784BBDBC6C6656C7DC30 /* Pods_Runner.framework */,
