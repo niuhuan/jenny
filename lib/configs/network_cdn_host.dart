@@ -22,9 +22,6 @@ Future chooseCdnHost(BuildContext context) async {
       "随机": "0",
       "分流1": "1",
       "分流2": "2",
-      "分流3": "3",
-      "分流4": "4",
-      "分流5": "5",
     },
   );
   if (choose != null) {

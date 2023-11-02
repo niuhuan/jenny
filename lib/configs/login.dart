@@ -170,23 +170,8 @@ class _LoginDialogState extends State<_LoginDialog> {
                   margin: const EdgeInsets.all(10),
                   child: MaterialButton(
                     color: Colors.orange.shade700,
-                    onPressed: () async {
-                      String? fen = await chooseMapDialog(
-                        context,
-                        values: {
-                          "国际分流1": "aHR0cHM6Ly8xOGNvbWljLnZpcC9zaWdudXA=",
-                          "国际分流2": "aHR0cHM6Ly8xOGNvbWljLm9yZy9zaWdudXA=",
-                          "东南亚分流3": "aHR0cHM6Ly9qbWNvbWljLm1lL3NpZ251cA==",
-                          "东南亚分流4": "aHR0cHM6Ly9qbWNvbWljMS5tZS9zaWdudXA=",
-                          "内地分流5": "aHR0cHM6Ly9qbS1jb21pYzIuY2Mvc2lnbnVw",
-                          "分流7": "aHR0cHM6Ly9qbS1jb21pYy5vcmcvc2lnbnVw",
-                          "分流8": "aHR0cHM6Ly9qbWNvbWljMi5ncm91cC9zaWdudXA=",
-                        },
-                        title: "选择注册分流",
-                      );
-                      if (fen != null) {
-                        openUrl(String.fromCharCodes(base64Decode(fen)));
-                      }
+                    onPressed: () {
+                      regxxx(context);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(10),
@@ -221,5 +206,24 @@ class _LoginDialogState extends State<_LoginDialog> {
         ),
       ),
     );
+  }
+}
+
+Future regxxx(BuildContext context) async {
+  String? fen = await chooseMapDialog(
+    context,
+    values: {
+      "國際通用網域1": "aHR0cHM6Ly8xOGNvbWljLnZpcC9zaWdudXA=",
+      "國際通用網域2": "aHR0cHM6Ly8xOGNvbWljLm9yZy9zaWdudXA=",
+      "东南亚分流1": "aHR0cHM6Ly9qbWNvbWljLm1lL3NpZ251cA==",
+      "东南亚分流2": "aHR0cHM6Ly9qbWNvbWljMS5tZS9zaWdudXA=",
+      "内地分流0": "aHR0cHM6Ly8xOGNvbWljLWdvZC5jYy9zaWdudXA=",
+      "内地分流1": "aHR0cHM6Ly8xOGNvbWljLWdvZC5jbHViL3NpZ251cA==",
+      "内地分流2": "aHR0cHM6Ly8xOGNvbWljLWdvZC54eXovc2lnbnVw",
+    },
+    title: "选择注册分流",
+  );
+  if (fen != null) {
+    openUrl(String.fromCharCodes(base64Decode(fen)));
   }
 }

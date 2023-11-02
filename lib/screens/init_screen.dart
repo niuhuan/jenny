@@ -6,8 +6,6 @@ import 'package:jenny/basic/commons.dart';
 import 'package:jenny/basic/methods.dart';
 import 'package:jenny/configs/configs.dart';
 import 'package:jenny/configs/login.dart';
-import 'package:jenny/configs/passed.dart';
-import 'package:jenny/screens/calculator_screen.dart';
 
 import '../basic/web_dav_sync.dart';
 import 'app_screen.dart';
@@ -61,12 +59,13 @@ class _InitScreenState extends State<InitScreen> {
     try {
       await methods.init();
       await initConfigs();
-      if (!currentPassed()) {
+      print("STATE : ${loginStatus}");
+      if (loginStatus == LoginStatus.notSet) {
         Future.delayed(Duration.zero, () async {
           await webDavSyncAuto(context);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (BuildContext context) {
-              return const CalculatorScreen();
+              return firstLoginScreen;
             }),
           );
         });

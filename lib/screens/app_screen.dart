@@ -20,7 +20,7 @@ class _AppScreenState extends State<AppScreen> {
 
   late final List<AppScreenData> _screens = [
     AppScreenData(
-      BrowserScreen(searchBarController: _searchBarController),
+      BrowserScreenWrapper(searchBarController: _searchBarController),
       '浏览',
       const Icon(Icons.menu_book_outlined),
       const Icon(Icons.menu_book),

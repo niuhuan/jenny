@@ -4,11 +4,66 @@ import 'package:flutter/material.dart';
 import 'package:jenny/basic/methods.dart';
 import 'package:jenny/screens/components/comic_pager.dart';
 import 'package:jenny/screens/components/content_builder.dart';
+import 'package:jenny/screens/components/content_error.dart';
+import 'package:jenny/screens/components/content_loading.dart';
 import 'package:jenny/screens/components/floating_search_bar.dart';
 
+import '../configs/login.dart';
 import 'components/browser_bottom_sheet.dart';
 import 'components/actions.dart';
 import 'components/comic_floating_search_bar.dart';
+
+class BrowserScreenWrapper extends StatefulWidget {
+  final FloatingSearchBarController searchBarController;
+
+  const BrowserScreenWrapper({Key? key, required this.searchBarController})
+      : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _BrowserScreenWrapperState();
+}
+
+class _BrowserScreenWrapperState extends State<BrowserScreenWrapper> {
+  @override
+  void initState() {
+    loginEvent.subscribe(_setState);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    loginEvent.unsubscribe(_setState);
+    super.dispose();
+  }
+
+  void _setState(_) {
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    switch (loginStatus) {
+      case LoginStatus.loginSuccess:
+        return BrowserScreen(searchBarController: widget.searchBarController);
+      case LoginStatus.loginField:
+        return ContentError(
+          error: "请先登录",
+          stackTrace: StackTrace.current,
+          onRefresh: () async {},
+        );
+      case LoginStatus.logging:
+        return const ContentLoading(
+          label: "登录中",
+        );
+      case LoginStatus.notSet:
+        return ContentError(
+          error: "请先登录",
+          stackTrace: StackTrace.current,
+          onRefresh: () async {},
+        );
+    }
+  }
+}
 
 class BrowserScreen extends StatefulWidget {
   final FloatingSearchBarController searchBarController;
