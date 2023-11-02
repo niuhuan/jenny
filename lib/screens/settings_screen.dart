@@ -10,6 +10,8 @@ import '../configs/android_display_mode.dart';
 import '../configs/display_jmcode.dart';
 import '../configs/download_and_export_to.dart';
 import '../configs/export_rename.dart';
+import '../configs/network_api_host.dart';
+import '../configs/network_cdn_host.dart';
 import '../configs/no_animation.dart';
 import '../configs/proxy.dart';
 import '../configs/search_title_words.dart';
@@ -45,6 +47,8 @@ class _SettingsState extends State<SettingsScreen> {
       body: ListView(
         children: [
           const Divider(),
+          apiHostSetting(),
+          cdnHostSetting(),
           proxySetting(),
           const Divider(),
           themeSetting(context),
