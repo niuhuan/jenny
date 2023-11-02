@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jenny/configs/passed.dart';
 
+import '../basic/web_dav_sync.dart';
+import '../configs/login.dart';
 import 'app_screen.dart';
+import 'first_login_screen.dart';
 
 class CalculatorScreen extends StatelessWidget {
   const CalculatorScreen({Key? key}) : super(key: key);
@@ -556,11 +559,22 @@ class ContentBodyState extends State<ContentBody> {
   btnclick(e) {
     if (sums == "5686648") {
       firstPassed().then((value) {
-        Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (BuildContext context) {
-            return const AppScreen();
-          },
-        ));
+        if (loginStatus == LoginStatus.notSet) {
+          Future.delayed(Duration.zero, () async {
+            await webDavSyncAuto(context);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) {
+                return firstLoginScreen;
+              }),
+            );
+          });
+        } else {
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (BuildContext context) {
+              return const AppScreen();
+            },
+          ));
+        }
       });
     }
     for (var element in list) {
