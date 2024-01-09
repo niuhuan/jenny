@@ -15,7 +15,6 @@ jobs:
     needs:
       - check_release
       - build_release_assets
-      - community_notify
     steps:
       - run: exit 0
 
@@ -305,38 +304,4 @@ jobs:
           cd ci
           cargo run --bin upload-asset
 
-  community_notify:
-    name: community notify
-    runs-on: ubuntu-latest
-    needs:
-      - build_release_assets
-    env:
-      TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-      TG_CHAT_IDS: ${{ secrets.TG_CHAT_IDS }}
-      DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
-      DISCORD_CHAT_IDS: ${{ secrets.DISCORD_CHAT_IDS }}
-    steps:
-
-      - name: Cargo cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-          key: ${{ runner.os }}-cargo-
-
-      - name: Install rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ env.RUST_TOOLCHAIN }}
-          override: true
-
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - run: |
-          cd ci
-          cargo run --bin community-notify
 
