@@ -1,0 +1,22 @@
+[package]
+name = "jmcomic"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.75"
+base64 = "0.13.0"
+block-modes = "0.8.1"
+aes = "0.7.5"
+hex = "0.4.3"
+lazy_static = "1.4.0"
+md5 = "0.7.0"
+rand = "0.8.5"
+reqwest = { version = "0.11.22", features = ["tokio-rustls", "rustls", "rustls-tls"], default-features = false }
+serde = { version = "1.0.190", features = ["derive"] }
+serde_derive = "1.0.190"
+serde_json = "1.0.108"
+serde_path_to_error = "0.1.14"
+tokio = { version = "1.33.0", features = ["macros"] }

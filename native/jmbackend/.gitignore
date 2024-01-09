@@ -1,0 +1,9 @@
+target/
+Cargo.lock
+
+platforms/android/jmbackend
+platforms/android/jmcomic-rs
+platforms/test/
+
+/.idea/
+*.iml

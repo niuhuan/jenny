@@ -117,13 +117,6 @@ jobs:
           cd ci
           cargo run --bin check-asset
 
-      - name: Check core
-        uses: actions/checkout@v3
-        with:
-          repository: 'niuhuan/jasmine-rs-core'
-          token: ${{ secrets.GH_TOKEN }}
-          path: 'native'
-
       - name: Cache Flutter dependencies (Linux/Android)
         if: steps.check_asset.outputs.skip_build != 'true' && matrix.config.host == 'ubuntu-latest'
         uses: actions/cache@v3

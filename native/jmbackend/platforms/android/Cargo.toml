@@ -1,0 +1,11 @@
+[package]
+name = "rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+jmbackend = { path = "../../" }
+jni = "0.21.0"
+
+[lib]
+crate-type = ["cdylib"]
