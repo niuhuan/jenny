@@ -10,9 +10,9 @@ const MAIN_BRANCH: &str = "main";
 #[tokio::main]
 async fn main() -> Result<()> {
     // get ghToken
-    let gh_token = std::env::var("GH_TOKEN")?;
+    let gh_token = std::env::var("GITHUB_TOKEN")?;
     if gh_token.is_empty() {
-        panic!("Please set GH_TOKEN");
+        panic!("Please set GITHUB_TOKEN");
     }
 
     let vs_code_txt = tokio::fs::read_to_string("version.code.txt").await?;

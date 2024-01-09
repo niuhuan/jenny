@@ -10,7 +10,7 @@ const UA: &str = "niuhuan jenny ci";
 #[tokio::main]
 async fn main() -> Result<()> {
     // get ghToken
-    let gh_token = std::env::var("GH_TOKEN")?;
+    let gh_token = std::env::var("GITHUB_TOKEN")?;
     let target = std::env::var("TARGET")?;
     let flutter_version = std::env::var("flutter_version")?;
 
